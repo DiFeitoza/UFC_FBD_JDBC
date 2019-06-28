@@ -6,16 +6,20 @@ import java.util.Scanner;
 
 import com.ufc.controller.ClienteController;
 import com.ufc.controller.FuncionarioController;
-import com.ufc.controller.ServicoController;
 import com.ufc.controller.MaquinaController;
+import com.ufc.controller.ProdutoController;
+import com.ufc.controller.ServicoController;
 import com.ufc.controller.AtendimentoController;
+import com.ufc.controller.AvaliacaoController;
 import com.ufc.controller.QueryController;
 
 import com.ufc.entity.Cliente;
 import com.ufc.entity.Funcionario;
-import com.ufc.entity.Servico;
 import com.ufc.entity.Maquina;
+import com.ufc.entity.Produto;
+import com.ufc.entity.Servico;
 import com.ufc.entity.Atendimento;
+import com.ufc.entity.Avaliacao;
 import com.ufc.entity.Recibo;
 
 public class interfaceMain {
@@ -23,7 +27,11 @@ public class interfaceMain {
 	Scanner scanner = new Scanner(System.in);
 	ClienteController clienteC = new ClienteController();
 	FuncionarioController funcionarioC = new FuncionarioController();
+	MaquinaController maquinaC = new MaquinaController();
+	ProdutoController produtoC = new ProdutoController();
 	ServicoController servicoC = new ServicoController();
+	AtendimentoController AtendimentoC = new AtendimentoController();
+	AvaliacaoController AvaliacaoC = new AvaliacaoController();
 	QueryController queryC = new QueryController();
 	
 	public void start() throws SQLException{
@@ -64,22 +72,22 @@ public class interfaceMain {
 					if(op.equals("1"))
 						registerCliente();
 					else if(op.equals("2")) {
-						;
+						registerFuncionario();
 					}
 					else if(op.equals("3")) {
-						;
+						//registerMaquina();
 					}
 					else if(op.equals("4")) {
-						;
+						//registerProduto();
 					}
 					else if(op.equals("5")) {
-						;
+						//registerServico();
 					}
 					else if(op.equals("6")) {
-						;
+						//registerAtendimento();
 					}
 					else if(op.equals("7")) {
-						;
+						//registerAvaliacao();
 					}
 				}
 				else if(op.equals("2")) {
@@ -149,7 +157,7 @@ public class interfaceMain {
 					}
 				}
 				else if(op.equals("4")) {
-					System.out.println("-------------CRUD-BUSCAR------------");
+					System.out.println("-------------CRUD-LISTAR------------");
 					System.out.println("Digite o nº da opção desejada");	
 					System.out.println("1. Cliente");
 					System.out.println("2. Funcionário");
@@ -366,6 +374,124 @@ public class interfaceMain {
 				" Nº " + clienteList.get(i).getNum_endereco() + "\n" +
 				" BAIRRO " + clienteList.get(i).getBairro()
 			);
+		}
+	}
+	
+	private void registerFuncionario() throws SQLException{
+		System.out.println("######### Registrar Funcionário #########");
+		
+		//cpf
+		System.out.println("Por favor, digite o cpf...");
+		String cpf = scanner.nextLine();
+		if (cpf.equals("")) {
+			System.out.println("CPF em branco!");
+			return;
+		} else if (!cpf.matches("^[0-9]{11}")) {
+			System.out.println("O CPF digitado é inválido");
+			return;
+		}
+		
+		//nome
+		System.out.println("Por favor, digite o nome do Funcionario...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome do autor é invalido!");
+			return;
+		}
+		
+		//tel_res
+		System.out.println("Por favor, digite o telefone residencial...");
+		String tel_res = scanner.nextLine();
+		if (tel_res.equals("")) {
+			System.out.println("telefone em branco!");
+			return;
+		} else if (!tel_res.matches("^[0-9]{1,}")) {
+			System.out.println("O telefone digitado é inválido");
+			return;
+		}
+		Long tel_resL = Long.parseLong(tel_res);
+		
+		//tel_com
+		System.out.println("Por favor, digite o telefone comercial...");
+		String tel_com = scanner.nextLine();
+		if (tel_res.equals("")) {
+			System.out.println("telefone em branco!");
+			return;
+		} else if (!tel_res.matches("^[0-9]{1,}")) {
+			System.out.println("O telefone digitado é inválido");
+			return;
+		}
+		Long tel_comL = Long.parseLong(tel_com);
+		
+		//logradouro
+		System.out.println("Por favor, digite o logradouro...");
+		String logra = scanner.nextLine();
+		if (logra.equals("")) {
+			System.out.println("Logradouro em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O logradouro invalido!");
+			return;
+		}
+		
+		//cep
+		System.out.println("Por favor, digite o cep...");
+		String cep = scanner.nextLine();
+		if (cep.equals("")) {
+			System.out.println("CEP em branco!");
+			return;
+		} else if (!cpf.matches("^[0-9]{1,}") && (cep.length() > 9 || cep.length() < 9)) {
+			System.out.println("O CPF digitado é inválido");
+			return;
+		}
+		Long cepL = Long.parseLong(cep);
+		
+		//num_end
+		System.out.println("Por favor, digite o numero do domicilio...");
+		String num_end = scanner.nextLine();
+		if (cep.equals("")) {
+			System.out.println("numero em branco!");
+			return;
+		} else if (!cpf.matches("^[0-9]{1,}")) {
+			System.out.println("O numero digitado é inválido");
+			return;
+		}
+		Long num_endL = Long.parseLong(num_end);
+		
+		//bairro
+		System.out.println("Por favor, digite o Bairro...");
+		String bairro = scanner.nextLine();
+		if (bairro.equals("")) {
+			System.out.println("Bairro em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O Bairr invalido!");
+			return;
+		}
+		//salario
+		System.out.println("Por favor, digite o Salário...");
+		String salario = scanner.nextLine();
+		
+		if (bairro.equals("")) {
+			System.out.println("Salário em branco!");
+			return;
+		} else if (!salario.matches("^[0-9]{1,}")){
+			System.out.println("O salario invalido!");
+			return;
+		}
+		
+		Float salF = Float.parseFloat(salario);
+		
+		boolean data = funcionarioC.addFuncionario(cpf, nome, tel_resL, tel_comL,
+				logra, cepL, num_endL, bairro, salF);
+		
+		if (data) {
+			System.out.println("Funcionario cadastrado com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
 		}
 	}
 
