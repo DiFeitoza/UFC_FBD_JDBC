@@ -86,7 +86,7 @@ public class AtendimentoDAO{
 
 	public boolean update(Atendimento atend) {
 		String sql = "UPDATE atendimentos SET id = ?, cpf_cli = ?, cpf_func = ?,"
-				+ "timestamp_ini = ?, timestamp_fim = ?, id_serv = ?, id_maq = ? + WHERE id = ?";
+				+ "timestamp_ini = ?, timestamp_fim = ?, id_serv = ?, id_maq = ? WHERE id = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();

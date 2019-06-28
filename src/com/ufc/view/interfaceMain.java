@@ -20,6 +20,7 @@ import com.ufc.entity.Maquina;
 import com.ufc.entity.Produto;
 import com.ufc.entity.Servico;
 import com.ufc.entity.Atendimento;
+import com.ufc.entity.AvaCliByAtend;
 import com.ufc.entity.Avaliacao;
 import com.ufc.entity.Recibo;
 
@@ -46,10 +47,12 @@ public class interfaceMain {
 			System.out.println("2. Excluir");
 			System.out.println("3. Buscar");
 			System.out.println("4. Listar");
+			System.out.println("5. Atualizar");
 			System.out.println("-------------CONSULTAS------------");
-			System.out.println("5. Listar produtos ativos por preco");
-			System.out.println("6. Listar recibos");
-			System.out.println("7. Consultar salários dos funcionários");
+			System.out.println("6. Listar produtos ativos por preco");
+			System.out.println("7. Listar recibos");
+			System.out.println("8. Consultar salários dos funcionários");
+			System.out.println("9. Consultar avaliações do usuários por atendimento");
 			
 			String op = scanner.nextLine();
 			
@@ -72,24 +75,18 @@ public class interfaceMain {
 					op = scanner.nextLine();
 					if(op.equals("1"))
 						registerCliente();
-					else if(op.equals("2")) {
+					else if(op.equals("2"))
 						registerFuncionario();
-					}
-					else if(op.equals("3")) {
+					else if(op.equals("3"))
 						registerMaquina();
-					}
-					else if(op.equals("4")) {
+					else if(op.equals("4"))
 						registerProduto();
-					}
-					else if(op.equals("5")) {
+					else if(op.equals("5"))
 						registerServico();
-					}
-					else if(op.equals("6")) {
+					else if(op.equals("6"))
 						registerAtendimento();
-					}
-					else if(op.equals("7")) {
+					else if(op.equals("7"))
 						registerAvaliacao();
-					}
 				}
 				else if(op.equals("2")) {
 					System.out.println("------------CRUD-EXCLUIR-----------");
@@ -105,24 +102,18 @@ public class interfaceMain {
 					op = scanner.nextLine();
 					if(op.equals("1"))
 						deleteCliente();
-					else if(op.equals("2")) {
+					else if(op.equals("2"))
 						deleteFuncionario();
-					}
-					else if(op.equals("3")) {
+					else if(op.equals("3"))
 						deleteMaquina();
-					}
-					else if(op.equals("4")) {
+					else if(op.equals("4"))
 						deleteProduto();
-					}
-					else if(op.equals("5")) {
+					else if(op.equals("5"))
 						deleteServico();
-					}
-					else if(op.equals("6")) {
+					else if(op.equals("6"))
 						deleteAtendimento();
-					}
-					else if(op.equals("7")) {
+					else if(op.equals("7"))
 						deleteAvaliacao();
-					}
 				}
 				else if(op.equals("3")) {
 					System.out.println("-------------CRUD-BUSCAR------------");
@@ -138,24 +129,18 @@ public class interfaceMain {
 					op = scanner.nextLine();
 					if(op.equals("1"))
 						searchClienteByCpf();
-					else if(op.equals("2")) {
+					else if(op.equals("2"))
 						searchFuncionarioByCpf();
-					}
-					else if(op.equals("3")) {
+					else if(op.equals("3"))
 						searchMaquinaById();
-					}
-					else if(op.equals("4")) {
+					else if(op.equals("4"))
 						searchProdutoById();
-					}
-					else if(op.equals("5")) {
+					else if(op.equals("5"))
 						searchServicoById();
-					}
-					else if(op.equals("6")) {
+					else if(op.equals("6"))
 						searchAtendimentoById();
-					}
-					else if(op.equals("7")) {
+					else if(op.equals("7"))
 						searchAvaliacaoById();
-					}
 				}
 				else if(op.equals("4")) {
 					System.out.println("-------------CRUD-LISTAR------------");
@@ -171,31 +156,55 @@ public class interfaceMain {
 					op = scanner.nextLine();
 					if(op.equals("1"))
 						listAllCliente();
-					else if(op.equals("2")) {
+					else if(op.equals("2"))
 						listAllFuncionario();
-					}
-					else if(op.equals("3")) {
+					else if(op.equals("3"))
 						listAllMaquina();
-					}
-					else if(op.equals("4")) {
+					else if(op.equals("4"))
 						listAllProduto();
-					}
-					else if(op.equals("5")) {
+					else if(op.equals("5"))
 						listAllServico();
-					}
-					else if(op.equals("6")) {
+					else if(op.equals("6"))
 						listAllAtendimento();
-					}
-					else if(op.equals("7")) {
+					else if(op.equals("7"))
 						listAllAvaliacao();
-					}
 				}
-				else if(op.equals("5"))
-					listProdAtivByPreco();
+				else if(op.equals("5")) {
+					System.out.println("-----------CRUD-ATUALIZAR----------");
+					System.out.println("Digite o nº da opção desejada");	
+					System.out.println("1. Cliente");
+					System.out.println("2. Funcionário");
+					System.out.println("3. Máquina");
+					System.out.println("4. Produto");
+					System.out.println("5. Serviço");
+					System.out.println("6. Atendimento");
+					System.out.println("7. Avaliação");
+
+					op = scanner.nextLine();
+					if(op.equals("1"))
+						updateCliente();
+					else if(op.equals("2"));
+						//listAllFuncionario();
+					else if(op.equals("3"));
+						//listAllMaquina();
+					else if(op.equals("4"));
+						//listAllProduto();
+					else if(op.equals("5"));
+						//listAllServico();
+					else if(op.equals("6"));
+						//listAllAtendimento();
+					else if(op.equals("7"));
+						//listAllAvaliacao();
+				}
+				
 				else if(op.equals("6"))
-					listRecibos();
+					listProdAtivByPreco();
 				else if(op.equals("7"))
+					listRecibos();
+				else if(op.equals("8"))
 					listSalariosFunc();
+				else if(op.equals("9"))
+					ListAvaCliByAtend();
 			} else {
 				System.out.println("Digite um número válido! Tente novamente...");
 			}
@@ -301,7 +310,17 @@ public class interfaceMain {
 				logra, cepL, num_endL, bairro);
 		
 		if (data) {
-			System.out.println("Cliente cadastrado com sucesso!");
+			System.out.println("Cliente cadastrado com sucesso: ");
+			System.out.println(
+				" CPF: " + cpf + "\n" +
+				" NOME: " + nome + "\n" +
+				" TEL RESIDENCIAL: " + tel_res + "\n" +
+				" TEL COMERCIAL: " + tel_com + "\n" +
+				" LOGRADOURO: " + logra + "\n" +
+				" CEP: " + cep + "\n" +
+				" Nº: " + num_end + "\n" + 
+				" BAIRRO: " + bairro
+			);
 		} else {
 			System.out.println("Ocorreu algum erro, tente novamente!");
 		}
@@ -793,12 +812,12 @@ public class interfaceMain {
 			System.out.println(
 				"CPF: " + cli.getCpf() + "\n" +
 				"NOME: " + cli.getNome() + "\n" +
-				"TEL RESIDENCIAL " + cli.getTel_residencial() + "\n" +
-				"TEL COMERCIAL " + cli.getTel_comercial() + "\n" +
-				"LOGRADOURO " + cli.getLogradouro() + "\n" +
-				"CEP " + cli.getCep() + "\n" +
-				"Nº " + cli.getNum_endereco() + "\n" + 
-				"BAIRRO " + cli.getBairro()
+				"TEL RESIDENCIAL: " + cli.getTel_residencial() + "\n" +
+				"TEL COMERCIAL: " + cli.getTel_comercial() + "\n" +
+				"LOGRADOURO: " + cli.getLogradouro() + "\n" +
+				"CEP: " + cli.getCep() + "\n" +
+				"Nº: " + cli.getNum_endereco() + "\n" + 
+				"BAIRRO: " + cli.getBairro()
 			);
 		}
 	}
@@ -858,7 +877,7 @@ public class interfaceMain {
 			System.out.println(
 				"ID: " + maq.getId() + "\n" +
 				"NOME: " + maq.getNome() + "\n" +
-				"STATUS " + maq.isStatus()
+				"STATUS: " + maq.isStatus()
 			);
 		}
 	}
@@ -1107,6 +1126,134 @@ public class interfaceMain {
 		}
 	}
 	
+	private void updateCliente() {
+		System.out.println("######### Atualizar Cliente #########");
+
+		//cpf
+		System.out.println("Por favor, digite o cpf...");
+		String cpf = scanner.nextLine();
+		if (cpf.equals("")) {
+			System.out.println("CPF em branco!");
+			return;
+		} else if (!cpf.matches("^[0-9]{11}")) {
+			System.out.println("O CPF digitado é inválido");
+			return;
+		}
+		
+		Cliente cli = clienteC.searchClienteByCpf(cpf);
+
+		if (cli == null)
+			System.out.println("Usuario nao encontrado!");
+		else {
+			//nome
+			System.out.println("Por favor, digite o nome do cliente...");
+			String nome = scanner.nextLine();
+			if (nome.equals("")) {
+				System.out.println("Nome em branco!");
+				return;
+			} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+				System.out.println("O nome do autor é invalido!");
+				return;
+			}
+			
+			//tel_res
+			System.out.println("Por favor, digite o telefone residencial...");
+			String tel_res = scanner.nextLine();
+			if (tel_res.equals("")) {
+				System.out.println("telefone em branco!");
+				return;
+			} else if (!tel_res.matches("^[0-9]{1,}")) {
+				System.out.println("O telefone digitado é inválido");
+				return;
+			}
+			Long tel_resL = Long.parseLong(tel_res);
+			
+			//tel_com
+			System.out.println("Por favor, digite o telefone comercial...");
+			String tel_com = scanner.nextLine();
+			if (tel_res.equals("")) {
+				System.out.println("telefone em branco!");
+				return;
+			} else if (!tel_res.matches("^[0-9]{1,}")) {
+				System.out.println("O telefone digitado é inválido");
+				return;
+			}
+			Long tel_comL = Long.parseLong(tel_com);
+			
+			//logradouro
+			System.out.println("Por favor, digite o logradouro...");
+			String logra = scanner.nextLine();
+			if (logra.equals("")) {
+				System.out.println("Logradouro em branco!");
+				return;
+			} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+				System.out.println("O logradouro invalido!");
+				return;
+			}
+			
+			//cep
+			System.out.println("Por favor, digite o cep...");
+			String cep = scanner.nextLine();
+			if (cep.equals("")) {
+				System.out.println("CEP em branco!");
+				return;
+			} else if (!cpf.matches("^[0-9]{1,}") && (cep.length() > 9 || cep.length() < 9)) {
+				System.out.println("O CPF digitado é inválido");
+				return;
+			}
+			Long cepL = Long.parseLong(cep);
+			
+			//num_end
+			System.out.println("Por favor, digite o numero do domicilio...");
+			String num_end = scanner.nextLine();
+			if (cep.equals("")) {
+				System.out.println("numero em branco!");
+				return;
+			} else if (!cpf.matches("^[0-9]{1,}")) {
+				System.out.println("O numero digitado é inválido");
+				return;
+			}
+			Long num_endL = Long.parseLong(num_end);
+			
+			//bairro
+			System.out.println("Por favor, digite o Bairro...");
+			String bairro = scanner.nextLine();
+			if (bairro.equals("")) {
+				System.out.println("Bairro em branco!");
+				return;
+			} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+				System.out.println("O Bairr invalido!");
+				return;
+			}
+			
+			cli.setNome(nome);
+			cli.setTel_comercial(tel_comL);
+			cli.setTel_residencial(tel_resL);
+			cli.setLogradouro(logra);
+			cli.setCep(cepL);
+			cli.setNum_endereco(num_endL);
+			cli.setBairro(bairro);
+			
+			boolean data = clienteC.updateClienteByCpf(cli);
+			
+			if (data) {
+				System.out.println("Cliente atualizado com sucesso:");
+				System.out.println(
+					" CPF: " + cli.getCpf() + "\n" +
+					" NOME: " + cli.getNome() + "\n" +
+					" TEL RESIDENCIAL " + cli.getTel_residencial() + "\n" +
+					" TEL COMERCIAL " + cli.getTel_comercial() + "\n" +
+					" LOGRADOURO " + cli.getLogradouro() + "\n" +
+					" CEP " + cli.getCep() + "\n" +
+					" Nº " + cli.getNum_endereco() + "\n" + 
+					" BAIRRO " + cli.getBairro()
+				);
+			} else {
+				System.out.println("Ocorreu algum erro, tente novamente!");
+			}
+		}
+	}
+	
 	private void registerFuncionario() throws SQLException{
 		System.out.println("######### Registrar Funcionário #########");
 		
@@ -1262,7 +1409,7 @@ public class interfaceMain {
 	
 	
 	private void listSalariosFunc() {
-		System.out.println("######### Salario dos Funcionários #########");
+		System.out.println("######### Salário dos Funcionários #########");
 		ArrayList<Funcionario> funcionarioList = new ArrayList<Funcionario>();
 		
 		funcionarioList = funcionarioC.getFuncionarioList();
@@ -1275,4 +1422,29 @@ public class interfaceMain {
 			);
 		}
 	}
+	
+	private void ListAvaCliByAtend() {
+		System.out.println("### Listar Avaliações por Atendimento ###");
+		ArrayList<AvaCliByAtend> avaCliByAtendList = new ArrayList<AvaCliByAtend>();
+		
+		avaCliByAtendList = queryC.getListAvaCliByAtend();
+		
+		for(int i = 0; i < avaCliByAtendList.size(); i++) {
+			System.out.println(
+				"ID_ATEND: " + avaCliByAtendList.get(i).getId_atend() + "\n" +
+				" COMENTÁRIO: " + avaCliByAtendList.get(i).getComent() + "\n" +
+				" FUNCIONÁRIO: " + avaCliByAtendList.get(i).getNome_func() + "\n" +
+				" NOTA: " + avaCliByAtendList.get(i).getNota_func() + "\n" +
+				" SERVIDOR: " + avaCliByAtendList.get(i).getNome_serv() + "\n" +
+				" NOTA: " + avaCliByAtendList.get(i).getNota_serv() + "\n" +
+				" MAQUINA: " + avaCliByAtendList.get(i).getNome_maq() + "\n" +
+				" NOTA: " + avaCliByAtendList.get(i).getNota_maq()
+			);
+		}
+	}
+	
 }
+
+/* implementar para quando fizer update ou registrar, exibir dados
+ * alterador/registrados
+ */

@@ -78,9 +78,8 @@ public class ServicoDAO{
 	}
 
 	public boolean update(Servico serv) {
-		String sql = "UPDATE servicos SET cpf = ?, nome = ?, telefone_residencial = ?,"
-				+ "telefone_comercial = ?, logradouro = ?, cep = ?, numero = ?, bairro = ?"
-				+ "WHERE cpf = ?";
+		String sql = "UPDATE servicos SET id = ?, nome = ?, preco = ?,"
+				+ "status = ? WHERE id = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
@@ -89,7 +88,8 @@ public class ServicoDAO{
 			stmt.setInt(1, serv.getId());
 			stmt.setString(2, serv.getNome());
 			stmt.setFloat(3, serv.getPreco());
-			stmt.setBoolean(4, serv.isStatus());			
+			stmt.setBoolean(4, serv.isStatus());
+			stmt.setInt(5, serv.getId());
 				
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();

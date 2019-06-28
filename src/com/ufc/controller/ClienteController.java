@@ -46,5 +46,9 @@ public class ClienteController {
 	
 	public ArrayList<Cliente> getClienteList() {
 		return clienteDao.getClienteList();
-	}	
+	}
+	
+	public boolean updateClienteByCpf(Cliente cli) {
+		return clienteDao.update(cli);
+	}
 }

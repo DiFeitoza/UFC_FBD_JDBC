@@ -101,7 +101,8 @@ public class ClienteDAO{
 			stmt.setString(5, cli.getLogradouro());
 			stmt.setLong(6, cli.getCep());
 			stmt.setLong(7, cli.getNum_endereco());
-			stmt.setString(8, cli.getBairro());			
+			stmt.setString(8, cli.getBairro());
+			stmt.setString(9, cli.getCpf());
 				
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();

@@ -76,7 +76,7 @@ public class MaquinaDAO{
 	}
 
 	public boolean update(Maquina maq) {
-		String sql = "UPDATE maquinas SET id = ?, nome = ?, status = ?,";
+		String sql = "UPDATE maquinas SET id = ?, nome = ?, status = ? WHERE id = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
@@ -84,7 +84,8 @@ public class MaquinaDAO{
 			
 			stmt.setInt(1, maq.getId());
 			stmt.setString(2, maq.getNome());
-			stmt.setBoolean(3, maq.isStatus());			
+			stmt.setBoolean(3, maq.isStatus());
+			stmt.setInt(4, maq.getId());
 				
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();

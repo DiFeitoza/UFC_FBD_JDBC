@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.ufc.connection.Connection_Postgres;
 import com.ufc.dao.QueryDAO;
+import com.ufc.entity.AvaCliByAtend;
 import com.ufc.entity.Recibo;
 
 public class QueryController {
@@ -13,6 +14,10 @@ public class QueryController {
 
 	public ArrayList<Recibo> getRecibos() {
 		return queryDao.getReciboList();
+	}
+	
+	public ArrayList<AvaCliByAtend> getListAvaCliByAtend() {
+		return queryDao.getListAvaCliByAtend();
 	}
 	
 }

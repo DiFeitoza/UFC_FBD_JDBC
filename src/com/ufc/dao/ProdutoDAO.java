@@ -76,9 +76,7 @@ public class ProdutoDAO{
 	}
 
 	public boolean update(Produto prod) {
-		String sql = "UPDATE produtos SET cpf = ?, nome = ?, telefone_residencial = ?,"
-				+ "telefone_comercial = ?, logradouro = ?, cep = ?, numero = ?, bairro = ?"
-				+ "WHERE cpf = ?";
+		String sql = "UPDATE produtos SET id = ?, cpf = ?, qtd = ? WHERE cpf = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
@@ -86,7 +84,8 @@ public class ProdutoDAO{
 			
 			stmt.setInt(1, prod.getId());
 			stmt.setString(2, prod.getNome());
-			stmt.setInt(3, prod.getQtd());			
+			stmt.setInt(3, prod.getQtd());
+			stmt.setInt(4, prod.getId());
 				
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();

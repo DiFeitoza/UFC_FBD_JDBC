@@ -11,7 +11,7 @@ Tabelas:
 		AVALIAÇÕES
 		GERENCIA_FUNCIONARIO
 		GERENCIA_SERVICO
-*//*
+*/
 drop table
 	funcionarios,
 	gerencia_funcionario,
@@ -23,7 +23,6 @@ drop table
 	atendimentos,
 	produtos_atendimento,
 	avaliacoes cascade;
-*/
 
 --- CRIACAO DE TABELAS ---
 
@@ -349,78 +348,149 @@ dos nomes e preços dos serviços disponíveis,
 na ordem do mais barato para o mais caro,
 no momento da consulta. */
 
-create or replace view DISPONIBILIDADE as (
-	select status, nome, preco
-	from servicos
-	where status = true
+CREATE OR REPLACE VIEW DISPONIBILIDADE AS (
+	SELECT status, nome, preco
+	FROM servicos
+	WHERE status = true
 );
 
-select nome, preco, status
-from disponibilidade
-order by preco asc;
+SELECT
+	nome, preco, status
+FROM
+	disponibilidade
+ORDER BY
+	preco ASC;
 
 /* Visão materializada. Registrar recibos
 dos atendimentos com seus valores. */
 
-create materialized view RECIBO (atendimento, funcionario, cliente, valor_total)  as (
-	select at.id, f.nome, c.nome, sum (ser.preco)
-	from atendimentos as at, servicos as ser, funcionarios as f, clientes as c
-	where at.cpf_func = f.cpf and at.cpf_cli = c.cpf and at.id_serv = ser.id
-	group by at.id, f.nome, c.nome
+--DROP MATERIALIZED VIEW recibo;
+CREATE MATERIALIZED VIEW recibo(atendId, funcNome, cliNome, valTotal) AS (
+	SELECT
+		at.id, f.nome, c.nome, sum(ser.preco)
+	FROM
+		atendimentos as at,
+		servicos as ser,
+		funcionarios as f,
+		clientes as c
+	WHERE
+		at.cpf_func = f.cpf and
+		at.cpf_cli = c.cpf and
+		at.id_serv = ser.id
+	GROUP BY
+		at.id, f.nome, c.nome
 );
 
-select *
-from recibo;
+SELECT *
+FROM recibo;
 
 -- Consulta de avaliação dos clientes sobre o atendimento.
 
-select av.id_atendimento, av.comentario, f.nome as funcionario, av.nota_func as nota_funcionario, s.nome as servico, av.nota_ser as nota_servico, m.nome as maquina, av.nota_maq as nota_maquina
-from avaliacoes as av, atendimentos as at, funcionarios as f, servicos as s, maquinas as m
-where at.id = av.id_atendimento and at.cpf_func = f.cpf and at.id_serv = s.id and at.id_maq = m.id;
-
-
+SELECT
+	av.id_atendimento, av.comentario, f.nome as funcionario,
+	av.nota_func as nota_funcionario, s.nome as servico,
+	av.nota_ser as nota_servico, m.nome as maquina,
+	av.nota_maq as nota_maquina
+FROM
+	avaliacoes as av,
+	atendimentos as at,
+	funcionarios as f,
+	servicos as s,
+	maquinas as m
+WHERE
+	at.id = av.id_atendimento and
+	at.cpf_func = f.cpf and
+	at.id_serv = s.id and
+	at.id_maq = m.id;
 
 -- Consulta dos serviços disponíveis que possuem avaliação e seus preços.
 
-select ser.nome, ser.preco
-from servicos as ser, avaliacoes as av, atendimentos as at
-where ser.status = true and at.id_serv = ser.id and at.id = av.id_atendimento
-group by ser.nome, ser.preco;
+SELECT
+	ser.nome, ser.preco
+FROM
+	servicos as ser,
+	avaliacoes as av,
+	atendimentos as at
+WHERE
+	ser.status = true and
+	at.id_serv = ser.id and
+	at.id = av.id_atendimento
+GROUP BY
+	ser.nome, ser.preco;
 
 -- Consulta de clientes que residem em Uruguaiana e que tenham sido atendidos.
 
-select cl.cpf, cl.nome
-from clientes as cl, atendimentos as at
-where cl.cpf = at.cpf_cli and cl.bairro = 'Uruguaiana';
+SELECT
+	cl.cpf, cl.nome
+FROM
+	clientes as cl,
+	atendimentos as at
+WHERE
+	cl.cpf = at.cpf_cli and
+	cl.bairro = 'Uruguaiana';
 
 -- Consulta da quantidade de clientes atendidos em cada bairro
 
-select cl.bairro, count (cl.cpf)
-from clientes as cl, atendimentos as at
-where cl.cpf = at.cpf_cli
-group by cl.bairro;
+SELECT
+	cl.bairro, COUNT(cl.cpf)
+FROM
+	clientes as cl,
+	atendimentos as at
+WHERE
+	cl.cpf = at.cpf_cli
+GROUP BY
+	cl.bairro;
 
 -- Consulta das melhores avaliações de cada serviço
 
-select ser.id , max (av.nota_ser) as maior_nota
-from servicos ser
-left join (atendimentos at left join avaliacoes av on at.id = av.id_atendimento)
-on at.id_serv = ser.id
-group by ser.id
-order by ser.id asc;
+CREATE OR REPLACE VIEW MaxAvaByServ AS
+SELECT
+	ser.id , ser.nome, MAX(av.nota_ser) as maior_nota
+FROM
+	servicos ser LEFT JOIN (
+		atendimentos at LEFT JOIN
+		avaliacoes av ON
+		at.id = av.id_atendimento
+	) ON at.id_serv = ser.id
+GROUP BY
+	ser.id
+ORDER BY
+	ser.id asc;
+	
+SELECT * FROM MaxAvaByServ
 
--- Consulta do salário dos funcionários
-select f.cpf , f.nome, f.salario
-from funcionarios as f;
+-- [OK] Consulta do salário dos funcionários
+SELECT
+	f.cpf , f.nome, f.salario
+FROM
+	funcionarios as f;
 
 -- Consulta dos produtos com quantidade em estoque maior que 5
-select p.nome as produto, p.qtd as quantidade
-from produtos as p
-where p.nome in (select p.nome from produtos as p where p.qtd > 5);
+SELECT
+	p.nome as produto, p.qtd as quantidade
+FROM
+	produtos as p
+WHERE
+	p.nome IN(
+		SELECT p.nome
+		FROM produtos as p
+		WHERE p.qtd > 5
+	);
 
 -- Consultar o uso dos produtos em atendimentos
-select pa.id_produto , p.nome as produto, count (pa.id_produto) as qtd_uso
-from produtos_atendimento as pa , produtos as p
-where pa.id_produto = p.id
-group by pa.id_produto,p.nome
-order by count (pa.id_produto) desc;
+SELECT
+	pa.id_produto , p.nome as produto, COUNT(pa.id_produto) as qtd_uso
+FROM
+	produtos_atendimento as pa , produtos as p
+WHERE
+	pa.id_produto = p.id
+GROUP BY
+	pa.id_produto,p.nome
+ORDER BY
+	COUNT(pa.id_produto) DESC;
+
+--TESTE
+DELETE FROM clientes WHERE cpf = '';
+
+SELECT cpf
+FROM clientes c;
