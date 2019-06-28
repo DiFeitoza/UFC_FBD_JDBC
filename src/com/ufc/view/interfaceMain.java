@@ -75,10 +75,10 @@ public class interfaceMain {
 						registerFuncionario();
 					}
 					else if(op.equals("3")) {
-						//registerMaquina();
+						registerMaquina();
 					}
 					else if(op.equals("4")) {
-						//registerProduto();
+						registerProduto();
 					}
 					else if(op.equals("5")) {
 						//registerServico();
@@ -494,7 +494,93 @@ public class interfaceMain {
 			System.out.println("Ocorreu algum erro, tente novamente!");
 		}
 	}
-
+	
+	private void registerMaquina() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//nome
+		System.out.println("Por favor, digite o nome do modelo da máquina...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome do autor é invalido!");
+			return;
+		}
+		
+		//status
+		System.out.println("Por favor, digite o Status da máquina...");
+		String status = scanner.nextLine();
+		if (status.equals("!(true|false)")) {
+			System.out.println("As opções são 'true' ou 'false'");
+			return;
+		}
+		Boolean statusB = Boolean.parseBoolean(status);
+		
+		boolean data = maquinaC.addMaquina(idI, nome, statusB);
+		
+		if (data) {
+			System.out.println("Maquina cadastrada com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void registerProduto() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//nome
+		System.out.println("Por favor, digite o nome do Produto...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome digitado é invalido!");
+			return;
+		}
+		
+		//id
+		System.out.println("Por favor, digite a Quantidade");
+		String qtd = scanner.nextLine();
+		if (qtd.equals("")) {
+			System.out.println("Quantidade em branco!");
+			return;
+		} else if (!qtd.matches("^[0-9]{1,}")) {
+			System.out.println("O valor digitado é inválido, use numeros naturais");
+			return;
+		}
+		Integer qtdI = Integer.parseInt(qtd);
+		
+		boolean data = produtoC.addProduto(idI, nome, qtdI);
+		
+		if (data) {
+			System.out.println("Produto cadastrado com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}	
 	private void listProdAtivByPreco() {
 		System.out.println("######### Servicos Ativos Por Preço #########");
 		ArrayList<Servico> servicoList = new ArrayList<Servico>();

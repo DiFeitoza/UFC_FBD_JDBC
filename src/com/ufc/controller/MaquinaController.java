@@ -10,7 +10,7 @@ public class MaquinaController {
 	Connection_Postgres connection_Postgres = new Connection_Postgres();
 	MaquinaDAO maquinaDao = new MaquinaDAO(connection_Postgres);
 
-	public boolean addMaquina(Integer id, String nome, boolean status, float preco) {
+	public boolean addMaquina(Integer id, String nome, boolean status) {
 		if (nome.equals("") || id <= 0) {
 			return false;
 		} else if (!nome.matches("[a-zA-Z �?ÂÃÀÇÉÊ�?ÓÔÕÚÜáâãàçéêíóôõúü]*")){

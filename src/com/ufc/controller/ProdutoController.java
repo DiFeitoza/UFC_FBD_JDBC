@@ -10,7 +10,7 @@ public class ProdutoController {
 	Connection_Postgres connection_Postgres = new Connection_Postgres();
 	ProdutoDAO produtoDao = new ProdutoDAO(connection_Postgres);
 
-	public boolean addProduto(Integer id, String nome, boolean status, Integer qtd) {
+	public boolean addProduto(Integer id, String nome, Integer qtd) {
 		if (nome.equals("") || id <= 0 || qtd <= 0) {
 			return false;
 		} else if (!nome.matches("[a-zA-Z �?ÂÃÀÇÉÊ�?ÓÔÕÚÜáâãàçéêíóôõúü]*")){
