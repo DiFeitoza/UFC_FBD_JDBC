@@ -9,7 +9,6 @@ public class Atendimento {
 	private String cpfFunc;
 	private Timestamp timeBeg;
 	private Timestamp timeEnd;
-	private float preco;
 	private Integer idServ;
 	private Integer idMaq;
 	
@@ -22,7 +21,6 @@ public class Atendimento {
 		this.cpfFunc = cpfFunc;
 		this.timeBeg = timeBeg;
 		this.timeEnd = timeEnd;
-		this.preco = preco;
 		this.idServ = idServ;
 		this.idMaq = idMaq;
 	}
@@ -67,14 +65,6 @@ public class Atendimento {
 
 	public void setTimeEnd(Timestamp timeEnd) {
 		this.timeEnd = timeEnd;
-	}
-
-	public float getPreco() {
-		return preco;
-	}
-
-	public void setPreco(float preco) {
-		this.preco = preco;
 	}
 
 	public Integer getIdServ() {

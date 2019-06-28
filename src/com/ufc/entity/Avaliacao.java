@@ -9,8 +9,8 @@ public class Avaliacao {
 	private Integer notaServ;
 	private Integer notaMaq;
 	
-	public Avaliacao(Integer id, Integer idAtend, String coment, Integer notaFunc, Integer notaServ, Integer notaMaq) {
-		super();
+	public Avaliacao(Integer id, Integer idAtend, String coment,
+			Integer notaFunc, Integer notaServ, Integer notaMaq) {
 		this.id = id;
 		this.idAtend = idAtend;
 		this.coment = coment;

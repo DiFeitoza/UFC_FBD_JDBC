@@ -32,12 +32,12 @@ public class AtendimentoController {
 		return atendimentoDao.create(atend);
 	}
 
-	public Atendimento searchAtendimentoByCpf(String cpf) {
-		return atendimentoDao.read(cpf);
+	public Atendimento searchAtendimentoById(Integer id) {
+		return atendimentoDao.read(id);
 	}
 	
-	public boolean delAtendimento(String cpf) {
-		return atendimentoDao.delete(cpf);	
+	public boolean delAtendimento(Integer id) {
+		return atendimentoDao.delete(id);	
 	}
 	
 	public ArrayList<Atendimento> getAtendimentosList() {

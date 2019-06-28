@@ -22,6 +22,7 @@ public class ProdutoController {
 		
 		prod.setId(id);
 		prod.setNome(nome);
+		
 		prod.setQtd(qtd);
 		
 		return produtoDao.create(prod);

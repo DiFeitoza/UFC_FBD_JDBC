@@ -19,7 +19,7 @@ public class AtendimentoDAO{
 	
 	public boolean create(Atendimento atend) {
 		String sql = "INSERT INTO Atendimentos (id, cpfCli, cpfFunc, timeBeg,"
-				+ "timeEnd, preco, idServ, idMaq) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "timeEnd, idServ, idMaq) VALUES(?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
@@ -30,9 +30,8 @@ public class AtendimentoDAO{
 			stmt.setString(3, atend.getCpfFunc());
 			stmt.setTimestamp(4, atend.getTimeBeg());
 			stmt.setTimestamp(5, atend.getTimeEnd());
-			stmt.setFloat(6, atend.getPreco());
-			stmt.setInt(7, atend.getIdServ());
-			stmt.setInt(8, atend.getIdMaq());
+			stmt.setInt(6, atend.getIdServ());
+			stmt.setInt(7, atend.getIdMaq());
 			
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();
@@ -52,19 +51,19 @@ public class AtendimentoDAO{
 		return false;
 	}
 	
-	public Atendimento read(String cpf) {
-		String sql = "SELECT * FROM atendimentos where cpf = ?";
+	public Atendimento read(Integer id) {
+		String sql = "SELECT * FROM atendimentos where id = ?";
 		Atendimento atend = null;
 				
 		try {
 			this.connection = connection_Postgres.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, cpf);
+			stmt.setInt(1, id);
 			
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				atend = new Atendimento();
-				atend.setId(rs.getInt("Id"));
+				atend.setId(rs.getInt("id"));
 				atend.setCpfCli(rs.getString("cpf_cli"));
 				atend.setCpfFunc(rs.getString("cpf_func"));
 				atend.setTimeBeg(rs.getTimestamp("timestamp_ini"));
@@ -86,9 +85,8 @@ public class AtendimentoDAO{
 	}
 
 	public boolean update(Atendimento atend) {
-		String sql = "UPDATE atendimentos SET cpf = ?, nome = ?, telefone_residencial = ?,"
-				+ "telefone_comercial = ?, logradouro = ?, cep = ?, numero = ?, bairro = ?"
-				+ "WHERE cpf = ?";
+		String sql = "UPDATE atendimentos SET id = ?, cpf_cli = ?, cpf_func = ?,"
+				+ "timestamp_ini = ?, timestamp_fim = ?, id_serv = ?, id_maq = ? + WHERE id = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
@@ -99,9 +97,8 @@ public class AtendimentoDAO{
 			stmt.setString(3, atend.getCpfFunc());
 			stmt.setTimestamp(4, atend.getTimeBeg());
 			stmt.setTimestamp(5, atend.getTimeEnd());
-			stmt.setFloat(6, atend.getPreco());
-			stmt.setInt(7, atend.getIdServ());
-			stmt.setInt(8, atend.getIdMaq());			
+			stmt.setInt(6, atend.getIdServ());
+			stmt.setInt(7, atend.getIdMaq());			
 				
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();
@@ -119,13 +116,13 @@ public class AtendimentoDAO{
 		return false;
 	}
 
-	public boolean delete(String cpf) {
-		String sql = "DELETE FROM atendimentos WHERE cpf = ?";
+	public boolean delete(Integer id) {
+		String sql = "DELETE FROM atendimentos WHERE id = ?";
 		
 		try {
 			this.connection = connection_Postgres.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, cpf);
+			stmt.setInt(1, id);
 
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();
@@ -157,7 +154,7 @@ public class AtendimentoDAO{
 			while (rs.next()) {
 				Atendimento atend = new Atendimento();
 				atend = new Atendimento();
-				atend.setId(rs.getInt("Id"));
+				atend.setId(rs.getInt("id"));
 				atend.setCpfCli(rs.getString("cpf_cli"));
 				atend.setCpfFunc(rs.getString("cpf_func"));
 				atend.setTimeBeg(rs.getTimestamp("timestamp_ini"));

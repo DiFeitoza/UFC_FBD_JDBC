@@ -1,6 +1,7 @@
 package com.ufc.view;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,8 +31,8 @@ public class interfaceMain {
 	MaquinaController maquinaC = new MaquinaController();
 	ProdutoController produtoC = new ProdutoController();
 	ServicoController servicoC = new ServicoController();
-	AtendimentoController AtendimentoC = new AtendimentoController();
-	AvaliacaoController AvaliacaoC = new AvaliacaoController();
+	AtendimentoController atendimentoC = new AtendimentoController();
+	AvaliacaoController avaliacaoC = new AvaliacaoController();
 	QueryController queryC = new QueryController();
 	
 	public void start() throws SQLException{
@@ -81,13 +82,13 @@ public class interfaceMain {
 						registerProduto();
 					}
 					else if(op.equals("5")) {
-						//registerServico();
+						registerServico();
 					}
 					else if(op.equals("6")) {
-						//registerAtendimento();
+						registerAtendimento();
 					}
 					else if(op.equals("7")) {
-						//registerAvaliacao();
+						registerAvaliacao();
 					}
 				}
 				else if(op.equals("2")) {
@@ -105,22 +106,22 @@ public class interfaceMain {
 					if(op.equals("1"))
 						deleteCliente();
 					else if(op.equals("2")) {
-						;
+						deleteFuncionario();
 					}
 					else if(op.equals("3")) {
-						;
+						deleteMaquina();
 					}
 					else if(op.equals("4")) {
-						;
+						deleteProduto();
 					}
 					else if(op.equals("5")) {
-						;
+						deleteServico();
 					}
 					else if(op.equals("6")) {
-						;
+						deleteAtendimento();
 					}
 					else if(op.equals("7")) {
-						;
+						deleteAvaliacao();
 					}
 				}
 				else if(op.equals("3")) {
@@ -138,22 +139,22 @@ public class interfaceMain {
 					if(op.equals("1"))
 						searchClienteByCpf();
 					else if(op.equals("2")) {
-						;
+						searchFuncionarioByCpf();
 					}
 					else if(op.equals("3")) {
-						;
+						searchMaquinaById();
 					}
 					else if(op.equals("4")) {
-						;
+						searchProdutoById();
 					}
 					else if(op.equals("5")) {
-						;
+						searchServicoById();
 					}
 					else if(op.equals("6")) {
-						;
+						searchAtendimentoById();
 					}
 					else if(op.equals("7")) {
-						;
+						searchAvaliacaoById();
 					}
 				}
 				else if(op.equals("4")) {
@@ -307,6 +308,327 @@ public class interfaceMain {
 		
 	}
 
+	private void registerMaquina() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//nome
+		System.out.println("Por favor, digite o nome do modelo da máquina...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome do autor é invalido!");
+			return;
+		}
+		
+		//status
+		System.out.println("Por favor, digite o Status da máquina...");
+		String status = scanner.nextLine();
+		if (status.equals("!(true|false)")) {
+			System.out.println("As opções são 'true' ou 'false'");
+			return;
+		}
+		Boolean statusB = Boolean.parseBoolean(status);
+		
+		boolean data = maquinaC.addMaquina(idI, nome, statusB);
+		
+		if (data) {
+			System.out.println("Maquina cadastrada com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void registerProduto() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//nome
+		System.out.println("Por favor, digite o nome do Produto...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome digitado é invalido!");
+			return;
+		}
+		
+		//id
+		System.out.println("Por favor, digite a Quantidade");
+		String qtd = scanner.nextLine();
+		if (qtd.equals("")) {
+			System.out.println("Quantidade em branco!");
+			return;
+		} else if (!qtd.matches("^[0-9]{1,}")) {
+			System.out.println("O valor digitado é inválido, use numeros naturais");
+			return;
+		}
+		Integer qtdI = Integer.parseInt(qtd);
+		
+		boolean data = produtoC.addProduto(idI, nome, qtdI);
+		
+		if (data) {
+			System.out.println("Produto cadastrado com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void registerServico() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//nome
+		System.out.println("Por favor, digite o nome do Serviço...");
+		String nome = scanner.nextLine();
+		if (nome.equals("")) {
+			System.out.println("Nome em branco!");
+			return;
+		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O nome do autor é invalido!");
+			return;
+		}
+		
+		//status
+		System.out.println("Por favor, digite o status da serviço...");
+		String status = scanner.nextLine();
+		if (status.equals("!(true|false)")) {
+			System.out.println("As opções são 'true' ou 'false'");
+			return;
+		}
+		Boolean statusB = Boolean.parseBoolean(status);
+		
+		//preco
+		System.out.println("Por favor, digite o preço do serviço...");
+		String preco = scanner.nextLine();
+		
+		if (preco.equals("")) {
+			System.out.println("Preço em branco!");
+			return;
+		} else if (!preco.matches("^[0-9]{1,}")){
+			System.out.println("O digite um valor valido!");
+			return;
+		}
+		
+		Float precoF = Float.parseFloat(preco);
+		
+		boolean data = servicoC.addServico(idI, nome, statusB, precoF);
+		
+		if (data) {
+			System.out.println("Serviço cadastrado com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+
+	private void registerAtendimento() {
+		//id
+		System.out.println("Por favor, digite o Id");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+		
+		//cpfCli
+		System.out.println("Por favor, digite o cpf...");
+		String cpfCli = scanner.nextLine();
+		if (cpfCli.equals("")) {
+			System.out.println("CPF em branco!");
+			return;
+		} else if (!cpfCli.matches("^[0-9]{11}")) {
+			System.out.println("O CPF digitado é inválido");
+			return;
+		}
+		
+		//cpfFunc
+		System.out.println("Por favor, digite o cpf...");
+		String cpfFunc = scanner.nextLine();
+		if (cpfFunc.equals("")) {
+			System.out.println("CPF em branco!");
+			return;
+		} else if (!cpfFunc.matches("^[0-9]{11}")) {
+			System.out.println("O CPF digitado é inválido");
+			return;
+		}
+		
+		//timeBegin
+		Timestamp timeBegin = new Timestamp(System.currentTimeMillis());
+		
+		//timeEnd
+		Timestamp timeEnd = new Timestamp(System.currentTimeMillis()+2);
+				
+		//preco
+		System.out.println("Por favor, digite o preço do Atendimento...");
+		String preco = scanner.nextLine();
+		
+		if (preco.equals("")) {
+			System.out.println("Preço em branco!");
+			return;
+		} else if (!preco.matches("^[0-9]{1,}")){
+			System.out.println("O digite um valor valido!");
+			return;
+		}
+		
+		Float precoF = Float.parseFloat(preco);
+		
+		//idMaq
+		System.out.println("Por favor, digite o id da Atendimento");
+		String idMaq = scanner.nextLine();
+		if (idMaq.equals("")) {
+			System.out.println("idMaq em branco!");
+			return;
+		} else if (!idMaq.matches("^[0-9]{1,}")) {
+			System.out.println("O idMaq digitado é inválido");
+			return;
+		}
+		Integer idMaqI = Integer.parseInt(idMaq);
+		
+		//idServ
+		System.out.println("Por favor, digite o id do Atendimento");
+		String idServ = scanner.nextLine();
+		if (idServ.equals("")) {
+			System.out.println("idServ em branco!");
+			return;
+		} else if (!idServ.matches("^[0-9]{1,}")) {
+			System.out.println("O idServ digitado é inválido");
+			return;
+		}
+		Integer idServI = Integer.parseInt(idServ);
+		
+		boolean data = atendimentoC.addAtendimento(idI, cpfCli, cpfFunc, timeBegin, timeEnd, precoF, idMaqI, idServI);
+		
+		if (data) {
+			System.out.println("Atendimento cadastrado com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void registerAvaliacao() {
+		//id
+		System.out.println("Por favor, digite o id da Avaliação");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			System.out.println("Id em branco!");
+			return;
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("O Id digitado é inválido");
+			return;
+		}
+		Integer idI = Integer.parseInt(id);
+
+		//idAtend
+		System.out.println("Por favor, digite o id do Atendimento");
+		String idAtend = scanner.nextLine();
+		if (idAtend.equals("")) {
+			System.out.println("id do Atendimento em branco!");
+			return;
+		} else if (!idAtend.matches("^[0-9]{1,}")) {
+			System.out.println("O idAtend digitado é inválido");
+			return;
+		}
+		Integer idAtendI = Integer.parseInt(id);		
+		
+		//coment
+		System.out.println("Por favor, digite um Comentário de até 60 caracteres...");
+		String coment = scanner.nextLine();
+		if (coment.equals("")) {
+			System.out.println("comentario em branco!");
+			return;
+		} else if (!coment.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
+			System.out.println("O comentario digitado é invalido!");
+			return;
+		}
+		
+		//notaFunc
+		System.out.println("Por favor, digite uma Nota de 0 a 10 para o Funcionário");
+		String notaFunc = scanner.nextLine();
+		if (notaFunc.equals("")) {
+			System.out.println("nota em branco!");
+			return;
+		}
+
+		Integer notaFuncI = Integer.parseInt(notaFunc);
+
+		if (notaFuncI < 0 || notaFuncI > 10) {
+			System.out.println("A nota digitada digitado é inválida, deve ser de 0 a 10");
+			return;
+		}
+		
+		//notaServ
+		System.out.println("Por favor, digite uma Nota de 0 a 10 para o Serviço");
+		String notaServ = scanner.nextLine();
+		if (notaServ.equals("")) {
+			System.out.println("nota em branco!");
+			return;
+		}
+
+		Integer notaServI = Integer.parseInt(notaServ);
+
+		if (notaServI < 0 || notaServI > 10) {
+			System.out.println("A nota digitada digitado é inválida, deve ser de 0 a 10");
+			return;
+		}
+
+		//notaMaq
+		System.out.println("Por favor, digite uma Nota de 0 a 10 para a Máquina");
+		String notaMaq = scanner.nextLine();
+		if (notaMaq.equals("")) {
+			System.out.println("nota em branco!");
+			return;
+		}
+
+		Integer notaMaqI = Integer.parseInt(notaMaq);
+
+		if (notaMaqI < 0 || notaMaqI > 10) {
+			System.out.println("A nota digitada digitado é inválida, deve ser de 0 a 10");
+			return;
+		}
+		
+		boolean data = avaliacaoC.addAvaliacao(idI, idAtendI, coment, notaFuncI, notaServI, notaMaqI);
+		
+		if (data) {
+			System.out.println("Avaliacao cadastrada com sucesso!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
 	private void deleteCliente() {
 		System.out.println("######### Deletar Cliente #########");
 		System.out.println("Por favor, digite o CPF do cliente que deseja deletar...");
@@ -325,6 +647,130 @@ public class interfaceMain {
 			System.out.println("Ocorreu algum erro, tente novamente!");
 		}
 	}
+	
+	private void deleteFuncionario() {
+		System.out.println("######### Deletar Funcionári #########");
+		System.out.println("Por favor, digite o CPF do Funcionário que deseja deletar...");
+		
+		String cpf = scanner.nextLine();
+		
+		while(!cpf.matches("^[0-9]{11}")) {
+			System.out.println("Digite um CPF valido!");
+			cpf = scanner.nextLine();
+		}
+		
+		boolean data = funcionarioC.delFuncionario(cpf);
+		if (data) {
+			System.out.println("Funcionário deletado!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void deleteMaquina() {
+		System.out.println("######### Deletar Máquina #########");
+		System.out.println("Por favor, digite o ID da Máquina que deseja deletar...");
+		
+		String id = scanner.nextLine();
+		
+		while(!id.matches("^[0-9]{1,}")) {
+			System.out.println("Digite um id válido!");
+			id = scanner.nextLine();
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		boolean data = maquinaC.delMaquina(idI);
+		
+		if (data) {
+			System.out.println("Máquina deletada!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void deleteProduto() {
+		System.out.println("######### Deletar Produto #########");
+		System.out.println("Por favor, digite o ID do Produto que deseja deletar...");
+		
+		String id = scanner.nextLine();
+		
+		while(!id.matches("^[0-9]{1,}")) {
+			System.out.println("Digite um id válido!");
+			id = scanner.nextLine();
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		boolean data = produtoC.delProduto(idI);
+		
+		if (data) {
+			System.out.println("Produto deletado!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void deleteServico() {
+		System.out.println("######### Deletar Servico #########");
+		System.out.println("Por favor, digite o ID do Servico que deseja deletar...");
+		
+		String id = scanner.nextLine();
+		
+		while(!id.matches("^[0-9]{1,}")) {
+			System.out.println("Digite um id válido!");
+			id = scanner.nextLine();
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		boolean data = servicoC.delServico(idI);
+		
+		if (data) {
+			System.out.println("Servico deletado!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void deleteAtendimento() {
+		System.out.println("######### Deletar Atendimento #########");
+		System.out.println("Por favor, digite o ID do Atendimento que deseja deletar...");
+		
+		String id = scanner.nextLine();
+		
+		while(!id.matches("^[0-9]{1,}")) {
+			System.out.println("Digite um id válido!");
+			id = scanner.nextLine();
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		boolean data = atendimentoC.delAtendimento(idI);
+		
+		if (data) {
+			System.out.println("Atendimento deletado!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
+	
+	private void deleteAvaliacao() {
+		System.out.println("######### Deletar Avaliação #########");
+		System.out.println("Por favor, digite o ID da Avaliação que deseja deletar...");
+		
+		String id = scanner.nextLine();
+		
+		while(!id.matches("^[0-9]{1,}")) {
+			System.out.println("Digite um id válido!");
+			id = scanner.nextLine();
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		boolean data = avaliacaoC.delAvaliacao(idI);
+		
+		if (data) {
+			System.out.println("Avaliação deletada!");
+		} else {
+			System.out.println("Ocorreu algum erro, tente novamente!");
+		}
+	}
 
 	private void searchClienteByCpf() {
 		System.out.println("######### Procurar Cliente por CPF #########");
@@ -334,8 +780,8 @@ public class interfaceMain {
 		
 		if (cpf.equals("")) {
 			System.out.println("CPF em branco!");
-		} else if (!cpf.matches("^[0-9]{1,}")) {
-			System.out.println("CPF invalido!");
+		} else if (!cpf.matches("^[0-9]{11}")) {
+			System.out.println("CPF invalido! Digite 11 dígitos");
 			return;
 		}
 		
@@ -356,6 +802,186 @@ public class interfaceMain {
 			);
 		}
 	}
+	
+	private void searchFuncionarioByCpf() {
+		System.out.println("######### Procurar Funcionario por CPF #########");
+		System.out.println("Por favor, digite o CPF do Funcionario que deseja procurar...");
+		
+		String cpf = scanner.nextLine();
+		
+		if (cpf.equals("")) {
+			System.out.println("CPF em branco!");
+		} else if (!cpf.matches("^[0-9]{11}")) {
+			System.out.println("CPF invalido! Digite 11 dígitos");
+			return;
+		}
+		
+		Funcionario func = funcionarioC.searchFuncionarioByCpf(cpf);
+		
+		if (func == null) {
+			System.out.println("Usuario nao encontrado!");
+		} else {
+			System.out.println(
+				"CPF: " + func.getCpf() + "\n" +
+				"NOME: " + func.getNome() + "\n" +
+				"TEL RESIDENCIAL " + func.getTel_residencial() + "\n" +
+				"TEL COMERCIAL " + func.getTel_comercial() + "\n" +
+				"LOGRADOURO " + func.getLogradouro() + "\n" +
+				"CEP " + func.getCep() + "\n" +
+				"Nº " + func.getNum_endereco() + "\n" + 
+				"BAIRRO " + func.getBairro() + "\n" +
+				"SALARIO " + func.getSalario()
+			);
+		}
+	}
+	
+	private void searchMaquinaById() {
+		System.out.println("######### Procurar Máquina por Id #########");
+		System.out.println("Por favor, digite o Id da Máquina que deseja procurar...");
+		
+		String id = scanner.nextLine();
+		
+		if (id.equals("")) {
+			System.out.println("id em branco!");
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("id inválido!");
+			return;
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		
+		Maquina maq = maquinaC.searchMaquinaById(idI);
+		
+		if (maq == null) {
+			System.out.println("Máquina não encontrada!");
+		} else {
+			System.out.println(
+				"ID: " + maq.getId() + "\n" +
+				"NOME: " + maq.getNome() + "\n" +
+				"STATUS " + maq.isStatus()
+			);
+		}
+	}
+
+	private void searchProdutoById() {
+		System.out.println("######### Procurar Produto por Id #########");
+		System.out.println("Por favor, digite o Id do Produto que deseja procurar...");
+		
+		String id = scanner.nextLine();
+		
+		if (id.equals("")) {
+			System.out.println("id em branco!");
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("id inválido!");
+			return;
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		
+		Produto prod = produtoC.searchProdutoById(idI);
+		
+		if (prod == null) {
+			System.out.println("Produto não encontrado!");
+		} else {
+			System.out.println(
+				"ID: " + prod.getId() + "\n" +
+				"NOME: " + prod.getNome() + "\n" +
+				"QTD: " + prod.getQtd()
+			);
+		}
+	}
+
+	private void searchServicoById() {
+		System.out.println("######### Procurar Serviço por Id #########");
+		System.out.println("Por favor, digite o Id do Serviço que deseja procurar...");
+		
+		String id = scanner.nextLine();
+		
+		if (id.equals("")) {
+			System.out.println("id em branco!");
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("id inválido!");
+			return;
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		
+		Servico serv = servicoC.searchServicoById(idI);
+		
+		if (serv == null) {
+			System.out.println("Serviço não encontrado!");
+		} else {
+			System.out.println(
+				"ID: " + serv.getId() + "\n" +
+				"NOME: " + serv.getNome() + "\n" +
+				"STATUS: " + serv.isStatus() + "\n" +
+				"PREÇO: " + serv.getPreco()
+			);
+		}
+	}
+
+	private void searchAtendimentoById() {
+		System.out.println("######### Procurar Atendimento por Id #########");
+		System.out.println("Por favor, digite o Id do Atendimento que deseja procurar...");
+		
+		String id = scanner.nextLine();
+		
+		if (id.equals("")) {
+			System.out.println("id em branco!");
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("id inválido!");
+			return;
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		
+		Atendimento atend = atendimentoC.searchAtendimentoById(idI);
+		
+		if (atend == null) {
+			System.out.println("Atendimento não encontrado!");
+		} else {
+			System.out.println(
+				"ID: " + atend.getId() + "\n" +
+				"CPF_CLIENTE: " + atend.getCpfCli() + "\n" +
+				"CPF_FUNCINÁRIO: " + atend.getCpfFunc() + "\n" +
+				"TIME_INI: " + atend.getTimeBeg() + "\n" +
+				"TIME_FIM: " + atend.getTimeEnd() + "\n" +
+				"ID_SERVIÇO: " + atend.getIdServ() + "\n" +
+				"ID_MÁQUINA: " + atend.getIdMaq()
+			);
+		}
+	}	
+
+	private void searchAvaliacaoById() {
+		System.out.println("######### Procurar Avaliação por Id #########");
+		System.out.println("Por favor, digite o Id da Avaliação que deseja procurar...");
+		
+		String id = scanner.nextLine();
+		
+		if (id.equals("")) {
+			System.out.println("id em branco!");
+		} else if (!id.matches("^[0-9]{1,}")) {
+			System.out.println("id inválido!");
+			return;
+		}
+		
+		Integer idI = Integer.parseInt(id);
+		
+		Avaliacao ava = avaliacaoC.searchAvaliacaoById(idI);
+		
+		if (ava == null) {
+			System.out.println("Avaliação não encontrada!");
+		} else {
+			System.out.println(
+				"ID: " + ava.getId() + "\n" +
+				"ID_ATENDIMENTO: " + ava.getIdAtend() + "\n" +
+				"COMENTÁRIO: " + ava.getComent() + "\n" +
+				"NOTA_FUNCIONÁRIO: " + ava.getNotaFunc() + "\n" +
+				"NOTA_SERVIÇO: " + ava.getNotaServ() + "\n" +
+				"NOTA_MÁQUINA: " + ava.getNotaMaq()
+			);
+		}
+	}	
 	
 	private void listAllClientes() {
 		System.out.println("######### Clientes cadastrados #########");
@@ -495,104 +1121,18 @@ public class interfaceMain {
 		}
 	}
 	
-	private void registerMaquina() {
-		//id
-		System.out.println("Por favor, digite o Id");
-		String id = scanner.nextLine();
-		if (id.equals("")) {
-			System.out.println("Id em branco!");
-			return;
-		} else if (!id.matches("^[0-9]{1,}")) {
-			System.out.println("O Id digitado é inválido");
-			return;
-		}
-		Integer idI = Integer.parseInt(id);
-		
-		//nome
-		System.out.println("Por favor, digite o nome do modelo da máquina...");
-		String nome = scanner.nextLine();
-		if (nome.equals("")) {
-			System.out.println("Nome em branco!");
-			return;
-		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
-			System.out.println("O nome do autor é invalido!");
-			return;
-		}
-		
-		//status
-		System.out.println("Por favor, digite o Status da máquina...");
-		String status = scanner.nextLine();
-		if (status.equals("!(true|false)")) {
-			System.out.println("As opções são 'true' ou 'false'");
-			return;
-		}
-		Boolean statusB = Boolean.parseBoolean(status);
-		
-		boolean data = maquinaC.addMaquina(idI, nome, statusB);
-		
-		if (data) {
-			System.out.println("Maquina cadastrada com sucesso!");
-		} else {
-			System.out.println("Ocorreu algum erro, tente novamente!");
-		}
-	}
-	
-	private void registerProduto() {
-		//id
-		System.out.println("Por favor, digite o Id");
-		String id = scanner.nextLine();
-		if (id.equals("")) {
-			System.out.println("Id em branco!");
-			return;
-		} else if (!id.matches("^[0-9]{1,}")) {
-			System.out.println("O Id digitado é inválido");
-			return;
-		}
-		Integer idI = Integer.parseInt(id);
-		
-		//nome
-		System.out.println("Por favor, digite o nome do Produto...");
-		String nome = scanner.nextLine();
-		if (nome.equals("")) {
-			System.out.println("Nome em branco!");
-			return;
-		} else if (!nome.matches("[a-zA-Z Ã�Ã‚ÃƒÃ€Ã‡Ã‰ÃŠÃ�Ã“Ã”Ã•ÃšÃœÃ¡Ã¢Ã£Ã Ã§Ã©ÃªÃ­Ã³Ã´ÃµÃºÃ¼]*")){
-			System.out.println("O nome digitado é invalido!");
-			return;
-		}
-		
-		//id
-		System.out.println("Por favor, digite a Quantidade");
-		String qtd = scanner.nextLine();
-		if (qtd.equals("")) {
-			System.out.println("Quantidade em branco!");
-			return;
-		} else if (!qtd.matches("^[0-9]{1,}")) {
-			System.out.println("O valor digitado é inválido, use numeros naturais");
-			return;
-		}
-		Integer qtdI = Integer.parseInt(qtd);
-		
-		boolean data = produtoC.addProduto(idI, nome, qtdI);
-		
-		if (data) {
-			System.out.println("Produto cadastrado com sucesso!");
-		} else {
-			System.out.println("Ocorreu algum erro, tente novamente!");
-		}
-	}	
 	private void listProdAtivByPreco() {
 		System.out.println("######### Servicos Ativos Por Preço #########");
-		ArrayList<Servico> servicoList = new ArrayList<Servico>();
+		ArrayList<Servico> ServicoList = new ArrayList<Servico>();
 		
-		servicoList = servicoC.getServicosList();
+		ServicoList = servicoC.getServicosList();
 		
-		for(int i = 0; i < servicoList.size(); i++) {
+		for(int i = 0; i < ServicoList.size(); i++) {
 			System.out.println(
-				"ID: " + servicoList.get(i).getId() + "\n" + 
-				" NOME: " + servicoList.get(i).getNome() + "\n" +
-				" PREÇO: " + servicoList.get(i).getPreco() + "\n" +
-				" STATUS: " + servicoList.get(i).isStatus()
+				"ID: " + ServicoList.get(i).getId() + "\n" + 
+				" NOME: " + ServicoList.get(i).getNome() + "\n" +
+				" PREÇO: " + ServicoList.get(i).getPreco() + "\n" +
+				" STATUS: " + ServicoList.get(i).isStatus()
 			);
 		}
 	}
