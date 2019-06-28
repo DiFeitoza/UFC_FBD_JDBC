@@ -361,10 +361,10 @@ FROM
 ORDER BY
 	preco ASC;
 
-/* Visão materializada. Registrar recibos
+/* [OK] Visão materializada. Registrar recibos
 dos atendimentos com seus valores. */
 
---DROP MATERIALIZED VIEW recibo;
+-- DROP MATERIALIZED VIEW recibo;
 CREATE MATERIALIZED VIEW recibo(atendId, funcNome, cliNome, valTotal) AS (
 	SELECT
 		at.id, f.nome, c.nome, sum(ser.preco)
@@ -381,15 +381,18 @@ CREATE MATERIALIZED VIEW recibo(atendId, funcNome, cliNome, valTotal) AS (
 		at.id, f.nome, c.nome
 );
 
-SELECT *
-FROM recibo;
+SELECT * FROM recibo;
 
--- Consulta de avaliação dos clientes sobre o atendimento.
-
+-- [OK] Consulta de avaliação dos clientes sobre o atendimento.
+CREATE OR REPLACE VIEW ListAvaCliByAtend AS
 SELECT
-	av.id_atendimento, av.comentario, f.nome as funcionario,
-	av.nota_func as nota_funcionario, s.nome as servico,
-	av.nota_ser as nota_servico, m.nome as maquina,
+	av.id_atendimento,
+	av.comentario,
+	f.nome as funcionario,
+	av.nota_func as nota_funcionario,
+	s.nome as servico,
+	av.nota_ser as nota_servico,
+	m.nome as maquina,
 	av.nota_maq as nota_maquina
 FROM
 	avaliacoes as av,
@@ -402,9 +405,10 @@ WHERE
 	at.cpf_func = f.cpf and
 	at.id_serv = s.id and
 	at.id_maq = m.id;
+	
+SELECT * FROM ListAvaCliByAtend;
 
--- Consulta dos serviços disponíveis que possuem avaliação e seus preços.
-
+-- [OK] Consulta dos serviços disponíveis que possuem avaliação e seus preços.
 SELECT
 	ser.nome, ser.preco
 FROM
@@ -418,19 +422,31 @@ WHERE
 GROUP BY
 	ser.nome, ser.preco;
 
--- Consulta de clientes que residem em Uruguaiana e que tenham sido atendidos.
-
+-- [OK] Consulta de clientes atendidos ordenado por bairro.
+CREATE OR REPLACE VIEW CliAtendOrderByBairro AS
 SELECT
-	cl.cpf, cl.nome
+	cl.bairro, cl.cpf, cl.nome
 FROM
 	clientes as cl,
 	atendimentos as at
 WHERE
-	cl.cpf = at.cpf_cli and
-	cl.bairro = 'Uruguaiana';
+	cl.cpf = at.cpf_cli
+ORDER BY
+	bairro ASC;
 
--- Consulta da quantidade de clientes atendidos em cada bairro
+SELECT * FROM CliAtendOrderByBairro;
 
+-- [OK] Quantidade de pessoas atendidas por bairro.
+CREATE OR REPLACE VIEW CountCliAtendByBairro AS
+SELECT cl.bairro, COUNT(*)
+FROM clientes as cl, atendimentos as at
+WHERE cl.cpf = at.cpf_cli
+GROUP BY bairro
+ORDER BY bairro;
+
+SELECT * FROM CliAtendOrderByBairro;
+
+-- [OK] Consulta da quantidade de clientes atendidos em cada bairro
 SELECT
 	cl.bairro, COUNT(cl.cpf)
 FROM
@@ -441,7 +457,7 @@ WHERE
 GROUP BY
 	cl.bairro;
 
--- Consulta das melhores avaliações de cada serviço
+-- [OK] Consulta das melhores avaliações de cada serviço
 
 CREATE OR REPLACE VIEW MaxAvaByServ AS
 SELECT
@@ -457,7 +473,7 @@ GROUP BY
 ORDER BY
 	ser.id asc;
 	
-SELECT * FROM MaxAvaByServ
+SELECT * FROM MaxAvaByServ;
 
 -- [OK] Consulta do salário dos funcionários
 SELECT
@@ -465,17 +481,19 @@ SELECT
 FROM
 	funcionarios as f;
 
--- Consulta dos produtos com quantidade em estoque maior que 5
-SELECT
-	p.nome as produto, p.qtd as quantidade
+-- [OK] Consulta produtos com baixo estoque
+CREATE OR REPLACE VIEW ReposicaoProdutos AS
+SELECT *
 FROM
 	produtos as p
 WHERE
 	p.nome IN(
 		SELECT p.nome
 		FROM produtos as p
-		WHERE p.qtd > 5
+		WHERE p.qtd < 3
 	);
+	
+SELECT * FROM ReposicaoProdutos;
 
 -- Consultar o uso dos produtos em atendimentos
 SELECT
@@ -488,9 +506,3 @@ GROUP BY
 	pa.id_produto,p.nome
 ORDER BY
 	COUNT(pa.id_produto) DESC;
-
---TESTE
-DELETE FROM clientes WHERE cpf = '';
-
-SELECT cpf
-FROM clientes c;

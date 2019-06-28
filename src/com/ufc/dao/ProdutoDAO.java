@@ -159,4 +159,35 @@ public class ProdutoDAO{
 		}
 		return produtoList;
 	}
+	
+	public ArrayList<Produto> getReposicaoProdutos() {
+		String sql = "SELECT * FROM ReposicaoProdutos";
+		ArrayList<Produto> produtoList = new ArrayList<Produto>();
+		
+		try {
+			this.connection = connection_Postgres.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			Produto prod = new Produto();
+			
+			while (rs.next()) {
+				prod = new Produto();
+				prod.setId(rs.getInt("id"));
+				prod.setNome(rs.getString("nome"));
+				prod.setQtd(rs.getInt("qtd"));
+				produtoList.add(prod);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("");
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return produtoList;
+	}
 }

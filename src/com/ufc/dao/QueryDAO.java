@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import com.ufc.connection.Connection_Postgres;
 import com.ufc.entity.AvaCliByAtend;
+import com.ufc.entity.CliAtendOrderByBairro;
+import com.ufc.entity.CountCliAtendByBairro;
+import com.ufc.entity.MaxAvaByServ;
 import com.ufc.entity.Recibo;
 
 public class QueryDAO{
@@ -85,6 +88,98 @@ public class QueryDAO{
 			}
 		}
 		return avaCliByAtendList;
+	}
+
+	public ArrayList<CliAtendOrderByBairro> getListCliAtendOrderByBairro() {
+		String sql = "SELECT * FROM CliAtendOrderByBairro";
+		ArrayList<CliAtendOrderByBairro> cliAtendOrderByBairroList = new ArrayList<CliAtendOrderByBairro>();
+		
+		try {
+			this.connection = connection_Postgres.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			CliAtendOrderByBairro cliAtend = new CliAtendOrderByBairro();
+			
+			while (rs.next()) {
+				cliAtend = new CliAtendOrderByBairro();
+				cliAtend.setBairro(rs.getString("bairro"));
+				cliAtend.setCpf(rs.getString("cpf"));
+				cliAtend.setNomeCli(rs.getString("nome"));	
+				cliAtendOrderByBairroList.add(cliAtend);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("");
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return cliAtendOrderByBairroList;
+	}
+	
+	public ArrayList<CountCliAtendByBairro> getCountCliAtendByBairro() {
+		String sql = "SELECT * FROM CountCliAtendByBairro";
+		ArrayList<CountCliAtendByBairro> countCliAtendByBairroList = new ArrayList<CountCliAtendByBairro>();
+		
+		try {
+			this.connection = connection_Postgres.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			CountCliAtendByBairro countCli = new CountCliAtendByBairro();
+			
+			while (rs.next()) {
+				countCli = new CountCliAtendByBairro();
+				countCli.setBairro("bairro");
+				countCli.setCount("count");	
+				countCliAtendByBairroList.add(countCli);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("");
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return countCliAtendByBairroList;
+	}
+	
+	public ArrayList<MaxAvaByServ> getMaxAvaByServList() {
+		String sql = "SELECT * FROM MaxAvaByServ";
+		ArrayList<MaxAvaByServ> maxAvaByServList = new ArrayList<MaxAvaByServ>();
+		
+		try {
+			this.connection = connection_Postgres.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			MaxAvaByServ maxAva = new MaxAvaByServ();
+			
+			while (rs.next()) {
+				maxAva = new MaxAvaByServ();
+				maxAva.setId(rs.getInt("id"));
+				maxAva.setNome(rs.getString("nome"));	
+				maxAva.setMaxNota(rs.getInt("maior_nota"));
+				maxAvaByServList.add(maxAva);
+			}			
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("");
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return maxAvaByServList;
 	}
 
 }

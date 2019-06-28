@@ -37,5 +37,9 @@ public class ProdutoController {
 	
 	public ArrayList<Produto> getProdutoList() {
 		return produtoDao.getProdutoList();
-	}	
+	}
+	
+	public ArrayList<Produto> getReposicaoProdutos() {
+		return produtoDao.getReposicaoProdutos();
+	}
 }

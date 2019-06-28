@@ -15,13 +15,16 @@ import com.ufc.controller.AvaliacaoController;
 import com.ufc.controller.QueryController;
 
 import com.ufc.entity.Cliente;
+import com.ufc.entity.CountCliAtendByBairro;
 import com.ufc.entity.Funcionario;
 import com.ufc.entity.Maquina;
+import com.ufc.entity.MaxAvaByServ;
 import com.ufc.entity.Produto;
 import com.ufc.entity.Servico;
 import com.ufc.entity.Atendimento;
 import com.ufc.entity.AvaCliByAtend;
 import com.ufc.entity.Avaliacao;
+import com.ufc.entity.CliAtendOrderByBairro;
 import com.ufc.entity.Recibo;
 
 public class interfaceMain {
@@ -53,6 +56,10 @@ public class interfaceMain {
 			System.out.println("7. Listar recibos");
 			System.out.println("8. Consultar salários dos funcionários");
 			System.out.println("9. Consultar avaliações do usuários por atendimento");
+			System.out.println("10. Listar clientes atendidos em ordem por bairro");
+			System.out.println("11. Listar quantidade de clientes atendidos por bairro");
+			System.out.println("12. Listar produtos que precisam de reposição");
+			System.out.println("13. Listar melhores avaliações por serviço");
 			
 			String op = scanner.nextLine();
 			
@@ -196,7 +203,6 @@ public class interfaceMain {
 					else if(op.equals("7"));
 						//listAllAvaliacao();
 				}
-				
 				else if(op.equals("6"))
 					listProdAtivByPreco();
 				else if(op.equals("7"))
@@ -205,6 +211,14 @@ public class interfaceMain {
 					listSalariosFunc();
 				else if(op.equals("9"))
 					ListAvaCliByAtend();
+				else if(op.equals("10"))
+					ListCliAtendOrderByBairro();
+				else if(op.equals("11"))
+					ListCountCliAtendByBairro();
+				else if(op.equals("12"))
+					ListReposicaoProdutos();
+				else if(op.equals("13"))
+					ListMaxAvaByServ();
 			} else {
 				System.out.println("Digite um número válido! Tente novamente...");
 			}
@@ -1424,7 +1438,7 @@ public class interfaceMain {
 	}
 	
 	private void ListAvaCliByAtend() {
-		System.out.println("### Listar Avaliações por Atendimento ###");
+		System.out.println("##### Avaliações por Atendimento #####");
 		ArrayList<AvaCliByAtend> avaCliByAtendList = new ArrayList<AvaCliByAtend>();
 		
 		avaCliByAtendList = queryC.getListAvaCliByAtend();
@@ -1439,6 +1453,65 @@ public class interfaceMain {
 				" NOTA: " + avaCliByAtendList.get(i).getNota_serv() + "\n" +
 				" MAQUINA: " + avaCliByAtendList.get(i).getNome_maq() + "\n" +
 				" NOTA: " + avaCliByAtendList.get(i).getNota_maq()
+			);
+		}
+	}
+	
+	private void ListCliAtendOrderByBairro() {
+		System.out.println("### Clientes atendidos em ordem por bairro ###");
+		ArrayList<CliAtendOrderByBairro> cliAtendOrderByBairro = new ArrayList<CliAtendOrderByBairro>();
+		
+		cliAtendOrderByBairro = queryC.getListCliAtendOrderByBairro();
+		
+		for(int i = 0; i < cliAtendOrderByBairro.size(); i++) {
+			System.out.println(
+				"BAIRRO: " + cliAtendOrderByBairro.get(i).getBairro() + "\n" +
+				" CPF: " + cliAtendOrderByBairro.get(i).getCpf() + "\n" +
+				" NOME: " + cliAtendOrderByBairro.get(i).getNomeCli()
+			);
+		}
+	}
+	
+	private void ListCountCliAtendByBairro() {
+		System.out.println("### Contagem de Clientes Atendidos por Bairro ###");
+		ArrayList<CountCliAtendByBairro> countCliAtendByBairroList = new ArrayList<CountCliAtendByBairro>();
+		
+		countCliAtendByBairroList = queryC.getCountCliAtendByBairro();
+		
+		for(int i = 0; i < countCliAtendByBairroList.size(); i++) {
+			System.out.println(
+				"BAIRRO: " + countCliAtendByBairroList.get(i).getBairro() + "\n" +
+				" QTD: " + countCliAtendByBairroList.get(i).getCount()
+			);
+		}
+	}
+	
+	private void ListReposicaoProdutos() {
+		System.out.println("### Produtos para reposição, baixa quantidade ###");
+		ArrayList<Produto> produtoList = new ArrayList<Produto>();
+		
+		produtoList = produtoC.getReposicaoProdutos();
+		
+		for(int i = 0; i < produtoList.size(); i++) {
+			System.out.println(
+				"ID: " + produtoList.get(i).getId() + "\n" +
+				" NOME: " + produtoList.get(i).getNome() + "\n" +
+				" QTD: " + produtoList.get(i).getQtd()
+			);
+		}
+	}
+	
+	private void ListMaxAvaByServ() {
+		System.out.println("######### Melhores avaliações por Serviço #########");
+		ArrayList<MaxAvaByServ> maxAvaByServList = new ArrayList<MaxAvaByServ>();
+		
+		maxAvaByServList = queryC.getMaxAvaByServList();
+		
+		for(int i = 0; i < maxAvaByServList.size(); i++) {
+			System.out.println(
+				"ID: " + maxAvaByServList.get(i).getId() + "\n" +
+				" NOME: " + maxAvaByServList.get(i).getNome() + "\n" +
+				" MAIOR NOTA: " + maxAvaByServList.get(i).getMaxNota()
 			);
 		}
 	}
