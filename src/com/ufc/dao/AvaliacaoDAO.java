@@ -139,7 +139,7 @@ public class AvaliacaoDAO{
 		return false;
 	}
 	
-	public ArrayList<Avaliacao> getAvaliacoesList() {
+	public ArrayList<Avaliacao> getAvaliacaoList() {
 		String sql = "SELECT * FROM avaliacoes;";
 		ArrayList<Avaliacao> avaliacaoList = new ArrayList<Avaliacao>();
 		

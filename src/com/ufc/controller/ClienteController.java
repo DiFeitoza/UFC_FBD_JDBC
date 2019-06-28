@@ -44,7 +44,7 @@ public class ClienteController {
 		return clienteDao.delete(cpf);	
 	}
 	
-	public ArrayList<Cliente> getClientesList() {
-		return clienteDao.getClientesList();
+	public ArrayList<Cliente> getClienteList() {
+		return clienteDao.getClienteList();
 	}	
 }

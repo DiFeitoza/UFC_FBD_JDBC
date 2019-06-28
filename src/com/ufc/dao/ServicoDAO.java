@@ -133,7 +133,7 @@ public class ServicoDAO{
 		return false;
 	}
 	
-	public ArrayList<Servico> getServicosList() {
+	public ArrayList<Servico> getServicoList() {
 		String sql = "SELECT * FROM servicos;";
 		ArrayList<Servico> servicoList = new ArrayList<Servico>();
 		

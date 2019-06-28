@@ -35,7 +35,7 @@ public class MaquinaController {
 		return maquinaDao.delete(id);	
 	}
 	
-	public ArrayList<Maquina> getMaquinasList() {
-		return maquinaDao.getMaquinasList();
+	public ArrayList<Maquina> getMaquinaList() {
+		return maquinaDao.getMaquinaList();
 	}	
 }

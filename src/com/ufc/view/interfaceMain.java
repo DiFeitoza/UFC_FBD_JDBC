@@ -170,25 +170,25 @@ public class interfaceMain {
 
 					op = scanner.nextLine();
 					if(op.equals("1"))
-						listAllClientes();
+						listAllCliente();
 					else if(op.equals("2")) {
-						;
+						listAllFuncionario();
 					}
 					else if(op.equals("3")) {
-						;
+						listAllMaquina();
 					}
 					else if(op.equals("4")) {
-						;
+						listAllProduto();
 					}
 					else if(op.equals("5")) {
-						;
+						listAllServico();
 					}
 					else if(op.equals("6")) {
-						;
+						listAllAtendimento();
 					}
 					else if(op.equals("7")) {
-						;
-					}					
+						listAllAvaliacao();
+					}
 				}
 				else if(op.equals("5"))
 					listProdAtivByPreco();
@@ -983,11 +983,11 @@ public class interfaceMain {
 		}
 	}	
 	
-	private void listAllClientes() {
+	private void listAllCliente() {
 		System.out.println("######### Clientes cadastrados #########");
 		ArrayList<Cliente> clienteList = new ArrayList<Cliente>();
 		
-		clienteList = clienteC.getClientesList();
+		clienteList = clienteC.getClienteList();
 		
 		for(int i = 0; i < clienteList.size(); i++) {
 			System.out.println(
@@ -999,6 +999,110 @@ public class interfaceMain {
 				" CEP " + clienteList.get(i).getCep() + "\n" +
 				" Nº " + clienteList.get(i).getNum_endereco() + "\n" +
 				" BAIRRO " + clienteList.get(i).getBairro()
+			);
+		}
+	}
+	
+	private void listAllFuncionario() {
+		System.out.println("######### Funcionários Cadastrados #########");
+		ArrayList<Funcionario> funcionarioList = new ArrayList<Funcionario>();
+		
+		funcionarioList = funcionarioC.getFuncionarioList();
+		
+		for(int i = 0; i < funcionarioList.size(); i++) {
+			System.out.println(
+				"CPF: " + funcionarioList.get(i).getCpf() + "\n" +
+				" NOME: " + funcionarioList.get(i).getNome() + "\n" +
+				" TEL RESIDENCIAL: " + funcionarioList.get(i).getTel_residencial() + "\n" +
+				" TEL COMERCIAL: " + funcionarioList.get(i).getTel_comercial() + "\n" +
+				" LOGRADOURO: " + funcionarioList.get(i).getLogradouro() + "\n" +
+				" CEP: " + funcionarioList.get(i).getCep() + "\n" +
+				" Nº: " + funcionarioList.get(i).getNum_endereco() + "\n" +
+				" BAIRRO: " + funcionarioList.get(i).getBairro() + "\n" +
+				" SALÁRIO: " + funcionarioList.get(i).getSalario()
+			);
+		}
+	}
+	
+	private void listAllMaquina() {
+		System.out.println("######### Máquinas Cadastradas #########");
+		ArrayList<Maquina> maquinaList = new ArrayList<Maquina>();
+		
+		maquinaList = maquinaC.getMaquinaList();
+		
+		for(int i = 0; i < maquinaList.size(); i++) {
+			System.out.println(
+				"ID: " + maquinaList.get(i).getId() + "\n" +
+				" NOME: " + maquinaList.get(i).getNome() + "\n" +
+				" STATUS: " + maquinaList.get(i).isStatus()
+			);
+		}
+	}
+	
+	private void listAllProduto() {
+		System.out.println("######### Produtos Cadastrados #########");
+		ArrayList<Produto> produtoList = new ArrayList<Produto>();
+		
+		produtoList = produtoC.getProdutoList();
+		
+		for(int i = 0; i < produtoList.size(); i++) {
+			System.out.println(
+				"ID: " + produtoList.get(i).getId() + "\n" +
+				" NOME: " + produtoList.get(i).getNome() + "\n" +
+				" QTD: " + produtoList.get(i).getQtd()
+			);
+		}
+	}
+	
+	private void listAllServico() {
+		System.out.println("######### Servicos Cadastrados #########");
+		ArrayList<Servico> servicoList = new ArrayList<Servico>();
+		
+		servicoList = servicoC.getServicoList();
+		
+		for(int i = 0; i < servicoList.size(); i++) {
+			System.out.println(
+				"ID: " + servicoList.get(i).getId() + "\n" +
+				" NOME: " + servicoList.get(i).getNome() + "\n" +
+				" STATUS: " + servicoList.get(i).isStatus() + "\n" +
+				" PREÇO: " + servicoList.get(i).getPreco()
+			);
+		}
+	}
+	
+	private void listAllAtendimento() {
+		System.out.println("######### Atendimentos Cadastrados #########");
+		ArrayList<Atendimento> atendimentoList = new ArrayList<Atendimento>();
+		
+		atendimentoList = atendimentoC.getAtendimentoList();
+		
+		for(int i = 0; i < atendimentoList.size(); i++) {
+			System.out.println(
+				"ID: " + atendimentoList.get(i).getId() + "\n" +
+				" CPF_CLIENTE: " + atendimentoList.get(i).getCpfCli() + "\n" +
+				" CPF_FUNCINÁRIO: " + atendimentoList.get(i).getCpfFunc() + "\n" +
+				" TIME_INI: " + atendimentoList.get(i).getTimeBeg() + "\n" +
+				" TIME_FIM: " + atendimentoList.get(i).getTimeEnd() + "\n" +
+				" ID_SERVIÇO: " + atendimentoList.get(i).getIdServ() + "\n" +
+				" ID_MÁQUINA: " + atendimentoList.get(i).getIdMaq()
+			);
+		}
+	}
+	
+	private void listAllAvaliacao() {
+		System.out.println("######### Avaliacões Cadastradas #########");
+		ArrayList<Avaliacao> avaliacaoList = new ArrayList<Avaliacao>();
+		
+		avaliacaoList = avaliacaoC.getAvaliacaoList();
+		
+		for(int i = 0; i < avaliacaoList.size(); i++) {
+			System.out.println(
+				"ID: " + avaliacaoList.get(i).getId() + "\n" +
+				" ID_ATENDIMENTO: " + avaliacaoList.get(i).getIdAtend() + "\n" +
+				" COMENTÁRIO: " + avaliacaoList.get(i).getComent() + "\n" +
+				" NOTA_FUNCIONÁRIO: " + avaliacaoList.get(i).getNotaFunc() + "\n" +
+				" NOTA_SERVIÇO: " + avaliacaoList.get(i).getNotaServ() + "\n" +
+				" NOTA_MÁQUINA: " + avaliacaoList.get(i).getNotaMaq()
 			);
 		}
 	}
@@ -1125,7 +1229,7 @@ public class interfaceMain {
 		System.out.println("######### Servicos Ativos Por Preço #########");
 		ArrayList<Servico> ServicoList = new ArrayList<Servico>();
 		
-		ServicoList = servicoC.getServicosList();
+		ServicoList = servicoC.getServicoList();
 		
 		for(int i = 0; i < ServicoList.size(); i++) {
 			System.out.println(
@@ -1137,6 +1241,7 @@ public class interfaceMain {
 		}
 	}
 
+	
 	private void listRecibos() {
 		System.out.println("######### Lista de Recibos #########");
 		ArrayList<Recibo> reciboList = new ArrayList<Recibo>();
@@ -1154,6 +1259,7 @@ public class interfaceMain {
 			);
 		}
 	}
+	
 	
 	private void listSalariosFunc() {
 		System.out.println("######### Salario dos Funcionários #########");

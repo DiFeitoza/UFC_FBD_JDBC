@@ -128,7 +128,7 @@ public class MaquinaDAO{
 		return false;
 	}
 	
-	public ArrayList<Maquina> getMaquinasList() {
+	public ArrayList<Maquina> getMaquinaList() {
 		String sql = "SELECT * FROM maquinas;";
 		ArrayList<Maquina> maquinaList = new ArrayList<Maquina>();
 		

@@ -40,7 +40,7 @@ public class AvaliacaoController {
 		return avaliacaoDao.delete(id);	
 	}
 	
-	public ArrayList<Avaliacao> getAvaliacoesList() {
-		return avaliacaoDao.getAvaliacoesList();
+	public ArrayList<Avaliacao> getAvaliacaoList() {
+		return avaliacaoDao.getAvaliacaoList();
 	}	
 }

@@ -22,7 +22,6 @@ public class ProdutoController {
 		
 		prod.setId(id);
 		prod.setNome(nome);
-		
 		prod.setQtd(qtd);
 		
 		return produtoDao.create(prod);
@@ -36,7 +35,7 @@ public class ProdutoController {
 		return produtoDao.delete(id);	
 	}
 	
-	public ArrayList<Produto> getProdutosList() {
-		return produtoDao.getProdutosList();
+	public ArrayList<Produto> getProdutoList() {
+		return produtoDao.getProdutoList();
 	}	
 }

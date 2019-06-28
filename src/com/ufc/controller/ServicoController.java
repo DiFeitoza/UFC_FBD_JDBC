@@ -36,7 +36,7 @@ public class ServicoController {
 		return servicoDao.delete(id);	
 	}
 	
-	public ArrayList<Servico> getServicosList() {
-		return servicoDao.getServicosList();
+	public ArrayList<Servico> getServicoList() {
+		return servicoDao.getServicoList();
 	}	
 }

@@ -145,7 +145,7 @@ public class ClienteDAO{
 		return false;
 	}
 	
-	public ArrayList<Cliente> getClientesList() {
+	public ArrayList<Cliente> getClienteList() {
 		String sql = "SELECT * FROM clientes;";
 		ArrayList<Cliente> clienteList = new ArrayList<Cliente>();
 		

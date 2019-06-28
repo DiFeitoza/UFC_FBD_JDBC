@@ -142,7 +142,7 @@ public class AtendimentoDAO{
 		return false;
 	}
 	
-	public ArrayList<Atendimento> getAtendimentosList() {
+	public ArrayList<Atendimento> getAtendimentoList() {
 		String sql = "SELECT * FROM atendimentos;";
 		ArrayList<Atendimento> atendimentoList = new ArrayList<Atendimento>();
 		

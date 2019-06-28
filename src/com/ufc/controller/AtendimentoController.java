@@ -40,7 +40,7 @@ public class AtendimentoController {
 		return atendimentoDao.delete(id);	
 	}
 	
-	public ArrayList<Atendimento> getAtendimentosList() {
-		return atendimentoDao.getAtendimentosList();
+	public ArrayList<Atendimento> getAtendimentoList() {
+		return atendimentoDao.getAtendimentoList();
 	}	
 }

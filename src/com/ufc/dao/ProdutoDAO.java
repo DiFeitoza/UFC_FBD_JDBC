@@ -130,8 +130,8 @@ public class ProdutoDAO{
 		return false;
 	}
 	
-	public ArrayList<Produto> getProdutosList() {
-		String sql = "SELECT * FROM produtos;";
+	public ArrayList<Produto> getProdutoList() {
+		String sql = "SELECT * FROM produtos";
 		ArrayList<Produto> produtoList = new ArrayList<Produto>();
 		
 		try {
@@ -146,6 +146,7 @@ public class ProdutoDAO{
 				prod.setId(rs.getInt("id"));
 				prod.setNome(rs.getString("nome"));
 				prod.setQtd(rs.getInt("qtd"));
+				produtoList.add(prod);
 			}
 			stmt.close();
 		} catch (SQLException e) {
