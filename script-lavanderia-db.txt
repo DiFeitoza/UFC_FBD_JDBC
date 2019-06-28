@@ -1,0 +1,426 @@
+/*
+Tabelas:
+	IMPLEMENTADO
+		FUNCIONARIOS
+		CLIENTES
+		SERVICOS
+		PRODUTOS
+		MAQUINAS
+		ATENDIMENTO
+		PRODUTOS_ATENDIMENTO
+		AVALIAÇÕES
+		GERENCIA_FUNCIONARIO
+		GERENCIA_SERVICO
+*//*
+drop table
+	funcionarios,
+	gerencia_funcionario,
+	maquinas,
+	servicos,
+	gerencia_servico,
+	produtos,
+	clientes,
+	atendimentos,
+	produtos_atendimento,
+	avaliacoes cascade;
+*/
+
+--- CRIACAO DE TABELAS ---
+
+create table FUNCIONARIOS (
+	cpf varchar (11),
+	nome varchar (50),
+	telefone_residencial varchar (14),
+	telefone_comercial varchar (14),
+	logradouro varchar (50),
+	CEP varchar (9),
+	numero varchar (10),
+	bairro varchar (50),
+	salario varchar (10),
+	primary key (cpf)
+);
+
+create table GERENCIA_FUNCIONARIO (
+	cpf_f varchar (11),
+	cpf_g varchar (11),
+	foreign key (cpf_f) references funcionarios (cpf),
+	foreign key (cpf_g) references funcionarios (cpf)
+);
+
+create table MAQUINAS (
+	id serial,
+	nome varchar (30),
+	status bool,
+	primary key (id)
+);
+
+create table SERVICOS (
+	id serial,
+	nome varchar (50),
+	status boolean,
+	preco float (10),
+	primary key (id)
+);
+
+create table GERENCIA_SERVICO (
+	cpf_g varchar (11),
+	id_s int,
+	foreign key (cpf_g) references funcionarios (cpf),
+	foreign key (id_s) references servicos (id)
+);
+
+create table PRODUTOS (
+	id serial,
+	nome varchar (50),
+	qtd int,
+	primary key (id)
+);
+
+create table CLIENTES (
+	cpf varchar (11),
+	nome varchar (50),
+	telefone_residencial varchar (14),
+	telefone_comercial varchar (14),
+	logradouro varchar (50),
+	CEP varchar (9),
+	numero varchar (10),
+	bairro varchar (50),
+	primary key (cpf)
+);
+
+create table ATENDIMENTOS (
+	id serial,
+	cpf_cli varchar (11),
+	cpf_func varchar (11),
+	timestamp_ini timestamp,
+	timestamp_fim timestamp,
+	id_serv int,
+	id_maq int,
+	primary key (id),
+	foreign key (cpf_cli) references clientes (cpf),
+	foreign key (cpf_func) references funcionarios (cpf),
+	foreign key (id_serv) references servicos (id),
+	foreign key (id_maq) references maquinas (id)
+);
+
+create table PRODUTOS_ATENDIMENTO (
+	id_produto int,
+	id_atendimento int,
+	foreign key (id_atendimento) references atendimentos (id),
+foreign key (id_produto) references produtos (id)
+);
+
+create table AVALIACOES (
+	id serial,
+	id_atendimento int,
+	comentario varchar (60),
+	nota_func int,
+	nota_ser int,
+	nota_maq int,
+	primary key (id),
+	foreign key (id_atendimento) references atendimentos (id)
+);
+
+--- INSERCAO DE DADOS ---
+
+insert into FUNCIONARIOS values
+	('02111122233', 'Júlio Sebastião', 889968821, null , 'Rua Palmiteiro', 61430021, 21, 'Coronel Vieira', 900),
+	('02211122233', 'Jorge Carlos', 88997443222, null, 'Av. Pedra do Salgueiro', 61430022, 23, 'Coronel Xavier', 1000),
+	('02311122233', 'Simone Salgado', 88997846923, null, 'Av. do Passinho', 61400024, 24, 'Velho Lago', 1500),
+	('02411122233', 'Simara Pedreira', 88997846924, null, 'Av. do Macaco', 61400025, 25, 'Terra Boa', 2000),
+	('02511122233', 'Maiara Acerola', 88997846925, null, 'Av. do Sapo', 61400026, 26, 'Vila Velha', 1600),
+	('02611122233', 'Maiariza Limões', 88997846926, null, 'Av. do Jaboti', 61400027, 27, 'Friburgo', 1700),
+	('02711122233', 'Luan Santana', 88997846927, null, 'Av. do Calango', 61400028, 28, 'Jardim', 1450),
+	('02811122233', 'Raimunda Verminho', 88997846928, null, 'Av. do Teju', 61400029, 29, 'Aldeota', 1300),
+	('02911122233', 'Nazaré Tedesco', 88997846929, null, 'Av. do Sagui', 61400030, 30, 'Bela Rosa', 1230),
+	('03011122233', 'Rodinei Guarulhos', 88997846930, null, 'Av. do Auau', 61400031, 31, 'Santa Claus', 1100),
+	('03111122233', 'Carlos Jucá', 88997846931, null, 'Av. do Cat', 61400032, 32, 'Jardim Jasmin', 4500),
+	('03211122233', 'Denis Kart', 88997846932, null, 'Av. do Catatau', 61400033, 33, 'Montese', 3000),
+	('03311122233', 'Evaldo Freire', 88997846933, null, 'Av. do Tatu', 61400034, 34, 'Damas', 987),
+	('03411122233', 'Orlanda Figueiredo', 88997846934, null, 'Av. do Gambá', 61400035, 35, 'Gentilândia', 1023),
+	('03511122233', 'Humberto', 88997846935, null, 'Av. do Cágado', 61400036, 36, 'Parangaba', 1019),
+	('03611122233', 'Israel', 88997846936, null, 'Av. do Tetel', 61400037, 37, 'Benfica', 1250),
+	('03711122233', 'Sandra Rocha', 88997846937, null, 'Av. do Suricate', 61400038, 38, 'Papicu', 999),
+	('03811122233', 'Diego Sabóia', 88997846938, null, 'Av. do Castor', 61400039, 39, 'Jacarezinho', 1500),
+	('03911122233', 'Fernando Guerra', 88997846939, null, 'Av. da Girafa', 61400040, 40, 'Serrinha', 1990),
+	('04011122233', 'Tícia Vanguarda', 88997846940, null, 'Av. do Boi', 61400041, 41, 'Sapiranga', 2000);
+
+insert into GERENCIA_FUNCIONARIO values
+	('02111122233','02111122233'),
+	('02211122233','02111122233'),
+	('02311122233','02111122233'),
+	('02411122233','02111122233'),
+	('02511122233','02111122233'),
+	('02611122233','02611122233'),
+	('02711122233','02611122233'),
+	('02811122233','02611122233'),
+	('02911122233','02611122233'),
+	('03011122233','02611122233'),
+	('03111122233','03111122233'),
+	('03211122233','03111122233'),
+	('03311122233','03111122233'),
+	('03411122233','03111122233'),
+	('03511122233','03111122233'),
+	('03611122233','03611122233'),
+	('03711122233','03611122233'),
+	('03811122233','03611122233'),
+	('03911122233','03611122233'),
+	('04011122233','03611122233');
+
+insert into MAQUINAS values
+	(default, 'Maquina de lavar Brastemp', true),
+	(default, 'Maquina de lavar Electrolux', false),
+	(default, 'Maquina de lavar Samsung', true),
+	(default, 'Tanquinho Brastemp', true),
+	(default, 'Tanquinho Electrolux', false),
+	(default, 'Tanquinho Samsung', true),
+	(default, 'Ferro de passar BlackDecker', true),
+	(default, 'Ferro de passar Multilaser', false),
+	(default, 'Centrífuga Brastemp', true),
+	(default, 'Centrífuga Consul', true),
+	(default, 'Centrífuga Brastemp', true),
+	(default, 'Centrífuga Multilaser', false),
+	(default, 'Centrífuga Positivo', false),
+	(default, 'Máquina Industrial 1G', true),
+	(default, 'Máquina Industrial 2G', true),
+	(default, 'Máquina de Lavar Térmica', true),
+	(default, 'Tanquinho Barbie', true),
+	(default, 'Centrífuga Barbie', true),
+	(default, 'Ferro de passar Barbie', true),
+	(default, 'Máquina Express', true);
+
+insert into SERVICOS values
+	(default, 'Limpeza de roupas a seco', true, 45),
+	(default, 'Limpeza de roupas delicadas', true, 45),
+	(default, 'Remoção de manchas', true, 15),
+	(default, 'Limpeza de roupas de cama', true, 80),
+	(default, 'Limpeza de roupas de mesa', true, 25),
+	(default, 'Limpeza de roupas de banho', true, 25),
+	(default, 'Restauração de cores', true, 25),
+	(default, 'Higienização de roupas', true, 25),
+	(default, 'Passadoria', true, 40),
+	(default, 'Roupas embaladas p/ viagem', true, 15),
+	(default, 'Limpeza de tapetes', true, 80),
+	(default, 'Limpeza de cortinas', true, 30),
+	(default, 'Limpeza de pelúcias', true, 40),
+	(default, 'Limpeza de tênis', true, 60),
+	(default, 'Limpeza de redes', true, 80),
+	(default, 'Limpeza de roupas de bebê', true, 45),
+	(default, 'Limpeza de vestidos de festa', true, 70),
+	(default, 'Limpeza de terno e paletó', true, 70),
+	(default, 'Impermeabilização de roupas', true, 80),
+	(default, 'Reparos de roupas', true, 15);
+
+insert into GERENCIA_SERVICO values
+	('02111122233','1'),
+	('02111122233','2'),
+	('02111122233','4'),
+	('02111122233','5'),
+	('02111122233','6'),
+	('02611122233','3'),
+	('02611122233','7'),
+	('02611122233','8'),
+	('02611122233','19'),
+	('02611122233','14'),
+	('03111122233','9'),
+	('03111122233','10'),
+	('03111122233','20'),
+	('03111122233','11'),
+	('03111122233','12'),
+	('03611122233','13'),
+	('03611122233','15'),
+	('03611122233','16'),
+	('03611122233','17'),
+	('03611122233','18');
+
+insert into PRODUTOS values
+	(default, 'Sabão em pó OMO', 10),
+	(default, 'Sabão em pó Brilhante', 5),
+	(default, 'Sabão Líquido Ypê', 5),
+	(default, 'Sabão Líquido Lux', 3),
+	(default, 'Sabão Líquido Jandaia', 3),
+	(default, 'Sabão Barra Neutro', 3),
+	(default, 'Sabão Barra Coco', 3),
+	(default, 'Sabão Barra Glicerina', 3),
+	(default, 'Sabão Barra Coco', 3),
+	(default, 'Sabão Barra Coco', 3),
+	(default, 'Amaciante Fofo', 10),
+	(default, 'Amaciante Ypê', 8),
+	(default, 'Amaciante Jasmin', 7),
+	(default, 'Amaciante Lux', 2),
+	(default, 'Amaciante Senador', 2),
+	(default, 'Removedor Venish Ultra', 7),
+	(default, 'Removedor Venish White', 7),
+	(default, 'Removedor Cisne', 5),
+	(default, 'Removedor Importado', 2),
+	(default, 'Removedor Bombril', 3);
+
+insert into CLIENTES values
+	('12111122233', 'José Amorim', 88997452040, null, 'Av. Felcro Azul', 61400000, 11, 'Uruguaiana'),
+	('12211122233', 'Agatha Santos', 88997452041, null, 'Av. Blues', 61400001, 12, 'Selva Dourada'),
+	('12311122233', 'Jardel Fernandes', 88997452042, null, 'Marechal Teodoro', 61400002, 13, 'Tibeti'),
+	('12411122233', 'Beatriz Ribeiro', 88997452043, null, 'Av. Felcro Amarelo', 61400003, 14, 'Sapoti'),
+	('12511122233', 'Luca Dióces', 88997452044, null, 'Av. Felcro Verde', 61400004, 15, 'Embu das Artes'),
+	('12611122233', 'Maria Izabel Lourdes', 88997452045, null, 'Av. Felcro Cinza', 61400005, 16, 'Aldeota'),
+	('12711122233', 'Gustavo Abrão', 88997452046, null, 'Av. Felcro Preto', 61400006, 17, 'Canidezinho'),
+	('12811122233', 'Cíntia Celta', 88997452047, null, 'Av. Felcro Lilás', 61400007, 18, 'Serrinha'),
+	('12911122233', 'Denise do Malte', 88997452048, null, 'Av. Felcro Roxo', 61400008, 19, 'Flores'),
+	('13011122233', 'Augusto Santos Lessa', 88997452049, null, 'Av. Felcro Laranja', 61400009, 20, 'Amor'),
+	('13111122233', 'Joana Duarte', 88997452050, null, 'Av. Felcro Branco', 61400010, 21, 'St Felicidade'),
+	('13211122233', 'Caio Victor Lima', 88997452051, null, 'Av. Felcro Bege', 61400011, 22, 'Diadema'),
+	('13311122233', 'Regina Duarte', 88997452052, null, 'Av. Felcro Marrom', 61400012, 23, 'Cajazeiras'),
+	('13411122233', 'Leonardo Vitela', 88997452053, null, 'Av. Felcro Verde', 61400013, 24, 'Uruguaiana'),
+	('13511122233', 'Jersson Silva', 88997452054, null, 'Av. Felcro Ciano', 61400014, 25, 'Uruguaiana'),
+	('13611122233', 'Rebecca Martins', 88997452055, null, 'Av. Felcro Rosa', 61400015, 26, 'Uruguaiana'),
+	('13711122233', 'Januário Sonza', 88997452056, null, 'Av. Felcro Bordô', 61400016, 27, 'Mundaú'),
+	('13811122233', 'Erenice Gonçalves', 88997452057, null, 'Av. Felcro Claro', 61400017, 28, 'Barreirinha'),
+	('13911122233', 'Francisco Fagundes', 88997452058, null, 'Av. Felcro Escuro', 61400018, 29, 'Boqueirão'),
+	('14011122233', 'Ana Clara Souza', 85996824059, null, 'Rua Alto dos Anjos', 61400019, 30, 'Pedreiras');
+
+insert into ATENDIMENTOS values
+	(default, '12111122233', '02111122233', now(), now() + '2 day', 1, 1),
+	(default, '12211122233', '02111122233', now(), now() + '2 day', 2, 3),
+	(default, '12311122233', '02211122233', now(), now() + '2 day', 3, 5),
+	(default, '12411122233', '02211122233', now(), now() + '2 day', 1, 2),
+	(default, '12511122233', '02311122233', now(), now() + '2 day', 2, 3),
+	(default, '12611122233', '02311122233', now(), now() + '2 day', 1, 1),
+	(default, '12711122233', '02311122233', now(), now() + '2 day', 3, 3),
+	(default, '12811122233', '02411122233', now(), now() + '2 day', 4, 4),
+	(default, '12911122233', '02811122233', now(), now() + '2 day', 4, 3),
+	(default, '13011122233', '03011122233', now(), now() + '2 day', 1, 2),
+	(default, '13411122233', '02511122233', now(), now() + '2 day', 1, 3),
+	(default, '13811122233', '02511122233', now(), now() + '2 day', 2, 15),
+	(default, '13511122233', '02911122233', now(), now() + '2 day', 3, 5),
+	(default, '12411122233', '02711122233', now(), now() + '2 day', 1, 12),
+	(default, '13211122233', '02211122233', now(), now() + '2 day', 2, 16),
+	(default, '13211122233', '02811122233', now(), now() + '2 day', 1, 14),
+	(default, '13111122233', '02811122233', now(), now() + '2 day', 3, 3),
+	(default, '14011122233', '02411122233', now(), now() + '2 day', 4, 4),
+	(default, '13911122233', '02211122233', now(), now() + '2 day', 4, 3),
+	(default, '14011122233', '03011122233', now(), now() + '2 day', 1, 1);
+
+insert into PRODUTOS_ATENDIMENTO values
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(16, 3),
+	(14, 3),
+	(3, 4),
+	(17, 4),
+	(5, 5),
+	(19, 5),
+	(9, 7),
+	(14, 7),
+	(12, 8),
+	(6, 9),
+	(10, 10),
+	(1, 11),
+	(9, 12),
+	(13, 13),
+	(1, 20),
+	(5, 17),
+	(7, 18);
+	
+insert into AVALIACOES values
+	(default, 1, 'comentario_01', 8, 10, 10),
+	(default, 2, 'comentario_02', 10, 8, 10),
+	(default, 3, 'comentario_03', 10, 10, 8),
+	(default, 4, 'comentario_04', 10, 7, 10),
+	(default, 5, 'comentario_05', 7, 10, 10),
+	(default, 6, 'comentario_06', 10, 10, 7),
+	(default, 7, 'comentario_07', 6, 10, 10),
+	(default, 8, 'comentario_08', 10, 10, 6),
+	(default, 9, 'comentario_09', 10, 10, 9),
+	(default, 10, 'comentario_10', 10, 10, 10),
+	(default, 11, 'comentario_11', 10, 10, 9),
+	(default, 12, 'comentario_12', 10, 7, 9),
+	(default, 13, 'comentario_13', 10, 8, 9),
+	(default, 14, 'comentario_14', 9, 10, 9),
+	(default, 15, 'comentario_15', 7, 10, 9),
+	(default, 16, 'comentario_16', 10, 8, 8),
+	(default, 17, 'comentario_17', 10, 8, 9),
+	(default, 18, 'comentario_18', 6, 10, 9),
+	(default, 19, 'comentario_19', 10, 10, 9),
+	(default, 20, 'comentario_20', 10, 8, 9);
+	
+/* Visão de disponibilidade por preço
+Onde os clientes podem visualizar a lista
+dos nomes e preços dos serviços disponíveis,
+na ordem do mais barato para o mais caro,
+no momento da consulta. */
+
+create or replace view DISPONIBILIDADE as (
+	select status, nome, preco
+	from servicos
+	where status = true
+);
+
+select nome, preco, status
+from disponibilidade
+order by preco asc;
+
+/* Visão materializada. Registrar recibos
+dos atendimentos com seus valores. */
+
+create materialized view RECIBO (atendimento, funcionario, cliente, valor_total)  as (
+	select at.id, f.nome, c.nome, sum (ser.preco)
+	from atendimentos as at, servicos as ser, funcionarios as f, clientes as c
+	where at.cpf_func = f.cpf and at.cpf_cli = c.cpf and at.id_serv = ser.id
+	group by at.id, f.nome, c.nome
+);
+
+select *
+from recibo;
+
+-- Consulta de avaliação dos clientes sobre o atendimento.
+
+select av.id_atendimento, av.comentario, f.nome as funcionario, av.nota_func as nota_funcionario, s.nome as servico, av.nota_ser as nota_servico, m.nome as maquina, av.nota_maq as nota_maquina
+from avaliacoes as av, atendimentos as at, funcionarios as f, servicos as s, maquinas as m
+where at.id = av.id_atendimento and at.cpf_func = f.cpf and at.id_serv = s.id and at.id_maq = m.id;
+
+
+
+-- Consulta dos serviços disponíveis que possuem avaliação e seus preços.
+
+select ser.nome, ser.preco
+from servicos as ser, avaliacoes as av, atendimentos as at
+where ser.status = true and at.id_serv = ser.id and at.id = av.id_atendimento
+group by ser.nome, ser.preco;
+
+-- Consulta de clientes que residem em Uruguaiana e que tenham sido atendidos.
+
+select cl.cpf, cl.nome
+from clientes as cl, atendimentos as at
+where cl.cpf = at.cpf_cli and cl.bairro = 'Uruguaiana';
+
+-- Consulta da quantidade de clientes atendidos em cada bairro
+
+select cl.bairro, count (cl.cpf)
+from clientes as cl, atendimentos as at
+where cl.cpf = at.cpf_cli
+group by cl.bairro;
+
+-- Consulta das melhores avaliações de cada serviço
+
+select ser.id , max (av.nota_ser) as maior_nota
+from servicos ser
+left join (atendimentos at left join avaliacoes av on at.id = av.id_atendimento)
+on at.id_serv = ser.id
+group by ser.id
+order by ser.id asc;
+
+-- Consulta do salário dos funcionários
+select f.cpf , f.nome, f.salario
+from funcionarios as f;
+
+-- Consulta dos produtos com quantidade em estoque maior que 5
+select p.nome as produto, p.qtd as quantidade
+from produtos as p
+where p.nome in (select p.nome from produtos as p where p.qtd > 5);
+
+-- Consultar o uso dos produtos em atendimentos
+select pa.id_produto , p.nome as produto, count (pa.id_produto) as qtd_uso
+from produtos_atendimento as pa , produtos as p
+where pa.id_produto = p.id
+group by pa.id_produto,p.nome
+order by count (pa.id_produto) desc;
